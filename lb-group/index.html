@@ -60,7 +60,7 @@
             width: 100%;
             height: auto;
             display: block;
-            opacity: 0;
+            opacity: 0.55;
             -webkit-mask-image:
                 linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%),
                 linear-gradient(to bottom, transparent 0%, black 8%, black 42%, transparent 88%);
@@ -188,13 +188,14 @@
             height: 24%;
             display: flex;
             flex-direction: row;
-            justify-content: flex-start;
+            justify-content: center;
             align-items: center;
-            gap: 30px;
+            gap: 0;
             background: #0d1528;
             position: relative;
             z-index: 2;
             padding: 0 40px;
+            overflow: hidden;
         }
         #slide-2 .card-icon-wrap {
             width: 110px;
@@ -207,26 +208,16 @@
             border: none;
             position: relative;
         }
-        #slide-2 .card-icon-wrap::before {
-            content: '';
-            position: absolute;
-            inset: -5px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0,229,255,0.35) 0%, rgba(0,229,255,0.08) 45%, transparent 70%);
-            pointer-events: none;
-        }
         #slide-2 .card-icon-wrap img {
             width: 100px;
             height: 100px;
-            position: relative;
-            z-index: 1;
         }
         #slide-2 .card-title-wrap {
             flex: 1;
             min-height: 60px;
             display: flex;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center;
             overflow: hidden;
         }
         #slide-2 .card-title {
@@ -235,11 +226,11 @@
             color: #ffffff;
             letter-spacing: 3px;
             text-transform: uppercase;
-            text-align: left;
             display: flex;
             align-items: center;
             direction: ltr;
             white-space: nowrap;
+            text-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
         }
         #slide-2 .card-title span { display: inline-block; }
 
@@ -598,57 +589,57 @@
                     <div class="stacked-card" data-title="CLEANING">
                         <div class="card-img-container"><img src="item1.png" class="card-img" alt="Cleaning"></div>
                         <div class="card-content">
-                            <div class="card-icon-wrap"><img src="icon1.png" alt="Icon"></div>
                             <div class="card-title-wrap"><div class="card-title"></div></div>
+                            <div class="card-icon-wrap"><img src="icon1.png" alt="Icon"></div>
                         </div>
                     </div>
                     <div class="stacked-card" data-title="VALETING">
                         <div class="card-img-container"><img src="item2.png" class="card-img" alt="Valeting"></div>
                         <div class="card-content">
-                            <div class="card-icon-wrap"><img src="icon2.png" alt="Icon"></div>
                             <div class="card-title-wrap"><div class="card-title"></div></div>
+                            <div class="card-icon-wrap"><img src="icon2.png" alt="Icon"></div>
                         </div>
                     </div>
                     <div class="stacked-card" data-title="HANDYMAN">
                         <div class="card-img-container"><img src="item3.png" class="card-img" alt="Handyman"></div>
                         <div class="card-content">
-                            <div class="card-icon-wrap"><img src="icon3.png" alt="Icon"></div>
                             <div class="card-title-wrap"><div class="card-title"></div></div>
+                            <div class="card-icon-wrap"><img src="icon3.png" alt="Icon"></div>
                         </div>
                     </div>
                     <div class="stacked-card" data-title="WASTE">
                         <div class="card-img-container"><img src="item4.png" class="card-img" alt="Waste"></div>
                         <div class="card-content">
-                            <div class="card-icon-wrap"><img src="icon4.png" alt="Icon"></div>
                             <div class="card-title-wrap"><div class="card-title"></div></div>
+                            <div class="card-icon-wrap"><img src="icon4.png" alt="Icon"></div>
                         </div>
                     </div>
                     <div class="stacked-card" data-title="REMOVALS">
                         <div class="card-img-container"><img src="item5.png" class="card-img" alt="Removals"></div>
                         <div class="card-content">
-                            <div class="card-icon-wrap"><img src="icon5.png" alt="Icon"></div>
                             <div class="card-title-wrap"><div class="card-title"></div></div>
+                            <div class="card-icon-wrap"><img src="icon5.png" alt="Icon"></div>
                         </div>
                     </div>
                     <div class="stacked-card" data-title="EXTERIOR">
                         <div class="card-img-container"><img src="item6.png" class="card-img" alt="Exterior"></div>
                         <div class="card-content">
-                            <div class="card-icon-wrap"><img src="icon6.png" alt="Icon"></div>
                             <div class="card-title-wrap"><div class="card-title"></div></div>
+                            <div class="card-icon-wrap"><img src="icon6.png" alt="Icon"></div>
                         </div>
                     </div>
                     <div class="stacked-card" data-title="LOCKSMITH">
                         <div class="card-img-container"><img src="item7.png" class="card-img" alt="Locksmith"></div>
                         <div class="card-content">
-                            <div class="card-icon-wrap"><img src="icon7.png" alt="Icon"></div>
                             <div class="card-title-wrap"><div class="card-title"></div></div>
+                            <div class="card-icon-wrap"><img src="icon7.png" alt="Icon"></div>
                         </div>
                     </div>
                     <div class="stacked-card" data-title="LANDSCAPING">
                         <div class="card-img-container"><img src="item8.png" class="card-img" alt="Landscaping"></div>
                         <div class="card-content">
-                            <div class="card-icon-wrap"><img src="icon8.png" alt="Icon"></div>
                             <div class="card-title-wrap"><div class="card-title"></div></div>
+                            <div class="card-icon-wrap"><img src="icon8.png" alt="Icon"></div>
                         </div>
                     </div>
                 </div>
@@ -777,9 +768,7 @@
             }
         });
 
-        /* ============================================================
-           PRELOAD ALL IMAGES BEFORE STARTING
-           ============================================================ */
+        /* Preload all images before starting */
         const imagesToPreload = [
             'home-left.png', 'logo.png',
             'item1.png','item2.png','item3.png','item4.png',
@@ -812,7 +801,7 @@
             gsap.config({ force3D: true, nullTargetWarn: false });
             gsap.ticker.lagSmoothing(1000, 60);
 
-            /* ---------- Pre-build all text spans ONCE ---------- */
+            /* ---------- Build all text once ---------- */
             function buildCharsFromText(container, text, highlightFirst) {
                 container.innerHTML = '';
                 const parts = text.split('|');
@@ -879,7 +868,7 @@
                 });
             });
 
-            /* ---------- Pre-build card titles ONCE ---------- */
+            /* ---------- Build card titles ONCE ---------- */
             const cards = gsap.utils.toArray('#slide-2 .stacked-card');
             const cardTitles = [];
             cards.forEach(function(card) {
@@ -904,7 +893,6 @@
             let currentIndex = 0;
             let slidesShown = 1;
 
-            /* Only 3 visible stack positions - front, middle, back */
             const positions = [
                 { x: 0,    y: 0,  rotation: -3, scale: 1,    opacity: 1,    zIndex: 100 },
                 { x: 60,   y: 15, rotation: 4,  scale: 0.94, opacity: 0.9,  zIndex: 90  },
@@ -915,7 +903,7 @@
             gsap.set("#slide-3", { y: "100%" });
             gsap.set("#final-slide", { y: "100%" });
 
-            /* Set initial state for all cards - only first 3 visible */
+            /* Cards initial state - front/middle/back + hidden */
             cards.forEach(function (card, idx) {
                 if (idx === 0) {
                     gsap.set(card, { x: 0, y: 0, rotation: -3, scale: 1, opacity: 1, zIndex: 100 });
@@ -926,15 +914,28 @@
                 } else {
                     gsap.set(card, { x: 150, y: 40, rotation: 10, scale: 0.85, opacity: 0, zIndex: 0 });
                 }
-                gsap.set(card.querySelector('.card-icon-wrap'), { x: 0 });
             });
 
-            /* Hide all titles initially - only show first */
-            cardTitles.forEach(function(t, idx) {
+            /* Icon and title initial states:
+               - Front card (idx 0): icon at x:0, text visible
+               - Middle card (idx 1): icon at x:70 (to the right), text hidden
+               - Back card (idx 2): icon at x:70, text hidden
+               - Others: icon at x:70, text hidden */
+            const iconPositions = [];
+            cards.forEach(function(card, idx) {
+                const icon = card.querySelector('.card-icon-wrap');
                 if (idx === 0) {
-                    gsap.set(t.spans, { opacity: 1 });
+                    gsap.set(icon, { x: 0 });
+                    iconPositions.push(0);
                 } else {
-                    gsap.set(t.spans, { opacity: 0 });
+                    gsap.set(icon, { x: 70 });
+                    iconPositions.push(70);
+                }
+                /* Set all title chars hidden except front */
+                if (idx === 0) {
+                    gsap.set(cardTitles[idx].spans, { opacity: 1 });
+                } else {
+                    gsap.set(cardTitles[idx].spans, { opacity: 0 });
                 }
             });
 
@@ -988,25 +989,36 @@
                 });
             }
 
-            /* ---------- ANIMATE NEW CARD TITLE (opacity only) ---------- */
-            function showCardTitle(cardIndex) {
+            /* ---------- ANIMATE ICON + TITLE FOR FRONT CARD ---------- */
+            function animateFrontCard(cardIndex) {
+                const card = cards[cardIndex];
+                const icon = card.querySelector('.card-icon-wrap');
                 const t = cardTitles[cardIndex];
+
+                /* Icon starts to the right, moves smoothly left */
+                gsap.set(icon, { x: 70 });
+                gsap.to(icon, {
+                    x: 0,
+                    duration: 1.1,
+                    ease: "power2.out"
+                });
+
+                /* Title chars appear just after icon starts moving */
                 gsap.set(t.spans, { opacity: 0 });
                 gsap.to(t.spans, {
                     opacity: 1,
-                    duration: 0.35,
-                    stagger: 0.04,
+                    duration: 0.4,
+                    stagger: 0.045,
                     ease: "power2.out",
-                    delay: 0.15
+                    delay: 0.35
                 });
             }
 
-            /* ---------- CHAINED CARD TRANSITION (no setInterval) ---------- */
+            /* ---------- CHAINED CARD TRANSITION ---------- */
             function advanceCard() {
                 if (slidesShown >= 8) return;
 
                 const frontCard = cards[currentIndex];
-                const prevIndex = currentIndex;
 
                 gsap.to(frontCard, {
                     x: -900,
@@ -1017,17 +1029,16 @@
                         currentIndex = currentIndex + 1;
                         slidesShown++;
                         updateStack();
-                        showCardTitle(currentIndex);
-                        /* Chain next card change after pause */
-                        gsap.delayedCall(2.2, advanceCard);
+                        animateFrontCard(currentIndex);
+                        gsap.delayedCall(2.4, advanceCard);
                     }
                 });
             }
 
             function startSlide2Carousel() {
                 updateStack();
-                showCardTitle(0);
-                gsap.delayedCall(2.2, advanceCard);
+                animateFrontCard(0);
+                gsap.delayedCall(2.4, advanceCard);
             }
 
             /* ---------- MASTER TIMELINE ---------- */
@@ -1077,8 +1088,8 @@
                     { y: 240, opacity: 1, duration: 1.2, ease: "power2.out" }, "<")
                 .add(function () { startSlide2Carousel(); }, "-=0.4");
 
-            /* Wait for all 8 cards: 7 transitions × 2.2s + buffer */
-            masterTl.to({}, { duration: 19 });
+            /* 7 transitions × 2.4s + buffer */
+            masterTl.to({}, { duration: 20 });
 
             /* TRANSITION 2 → 3 */
             masterTl
@@ -1181,13 +1192,22 @@
                 .add(function () {
                     document.querySelector('#slide-3 .phone-item').classList.add('filled');
                     const phoneIcon = document.querySelector('#slide-3 .phone-item .icon-wrap');
+                    /* Longer, smoother ring with slight scale up */
+                    gsap.to(phoneIcon, {
+                        scale: 1.25,
+                        duration: 0.35,
+                        ease: "power2.out",
+                        yoyo: true,
+                        repeat: 15
+                    });
                     gsap.fromTo(phoneIcon,
                         { rotation: 0 },
                         {
-                            rotation: 18, duration: 0.09, repeat: 21,
+                            rotation: 20, duration: 0.1,
+                            repeat: 45,
                             yoyo: true, ease: "power2.inOut",
                             transformOrigin: "center center",
-                            onComplete: function () { gsap.to(phoneIcon, { rotation: 0, duration: 0.15, ease: "power2.out" }); }
+                            onComplete: function () { gsap.to(phoneIcon, { rotation: 0, duration: 0.2, ease: "power2.out" }); }
                         }
                     );
                 })
@@ -1197,7 +1217,7 @@
 
             /* TRANSITION 3 → FINAL */
             masterTl
-                .to("#slide-3", { y: "-100%", duration: 0.9, ease: "power2.inOut" }, "+=1.0")
+                .to("#slide-3", { y: "-100%", duration: 0.9, ease: "power2.inOut" }, "+=1.5")
                 .to("#final-slide", { y: "0%", duration: 0.9, ease: "power2.inOut" }, "<");
 
             /* FINAL SLIDE */
