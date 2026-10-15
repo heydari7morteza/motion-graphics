@@ -35,10 +35,7 @@
             transform-origin: center center;
             transform: scale(0.35);
             overflow: hidden;
-            will-change: transform;
             flex-shrink: 0;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
         }
 
         .slide {
@@ -48,9 +45,6 @@
             height: 100%;
             background: radial-gradient(circle at center, #0a1128 0%, #000000 100%);
             overflow: hidden;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            transform: translateZ(0);
         }
 
         /* ==================== SLIDE 1 ==================== */
@@ -93,8 +87,6 @@
             height: auto;
             margin-bottom: 40px;
             opacity: 0;
-            will-change: transform, opacity;
-            transform: translateZ(0);
         }
         #slide-1 .text-container {
             display: flex;
@@ -104,9 +96,9 @@
             letter-spacing: 4px;
             text-transform: uppercase;
         }
-        #slide-1 .text-leo { color: #ffffff; opacity: 0; will-change: transform, opacity; }
-        #slide-1 .text-blue { color: #00b4d8; opacity: 0; will-change: transform, opacity; }
-        #slide-1 .text-group { color: #ffffff; opacity: 0; will-change: transform, opacity; }
+        #slide-1 .text-leo { color: #ffffff; opacity: 0; }
+        #slide-1 .text-blue { color: #00b4d8; opacity: 0; }
+        #slide-1 .text-group { color: #ffffff; opacity: 0; }
         #slide-1 .neon-line {
             margin-top: 25px;
             height: 6px;
@@ -116,7 +108,6 @@
             opacity: 0;
             transform: scaleX(0);
             transform-origin: center;
-            will-change: transform, opacity;
         }
 
         /* ==================== SLIDE 2 ==================== */
@@ -130,7 +121,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            will-change: transform;
         }
         #slide-2 .s2-text-1, #slide-2 .s2-text-2, #slide-2 .s2-text-3 {
             display: flex;
@@ -156,7 +146,8 @@
             position: absolute;
             top: 50%; left: 50%;
             z-index: 10;
-            will-change: transform, opacity;
+            transform: translate(-50%, -50%);
+            opacity: 0;
         }
         #slide-2 .stack-container {
             position: relative;
@@ -171,16 +162,11 @@
             margin: -420px 0 0 -360px;
             background: #0d1529;
             border-radius: 30px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
             overflow: hidden;
             opacity: 0;
             transform-origin: center center;
             display: flex;
             flex-direction: column;
-            will-change: transform, opacity;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            transform: translateZ(0);
         }
         #slide-2 .card-img-container {
             width: 100%;
@@ -191,6 +177,7 @@
             border-top-right-radius: 28px;
             border-bottom-left-radius: 18px;
             border-bottom-right-radius: 18px;
+            background: #0d1529;
         }
         #slide-2 .card-img {
             width: 100%;
@@ -219,13 +206,21 @@
             align-items: center;
             background: transparent;
             border: none;
-            box-shadow: none;
-            will-change: transform;
+            position: relative;
+        }
+        #slide-2 .card-icon-wrap::before {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,229,255,0.35) 0%, rgba(0,229,255,0.08) 45%, transparent 70%);
+            pointer-events: none;
         }
         #slide-2 .card-icon-wrap img {
             width: 100px;
             height: 100px;
-            filter: drop-shadow(0 0 12px rgba(0, 229, 255, 0.7));
+            position: relative;
+            z-index: 1;
         }
         #slide-2 .card-title-wrap {
             width: 450px;
@@ -265,7 +260,7 @@
             z-index: 50;
             text-align: center;
             transform-origin: center center;
-            will-change: transform, opacity;
+            opacity: 0;
         }
         #slide-3 .stamp-text {
             display: flex;
@@ -338,7 +333,6 @@
             padding: 0 90px;
             opacity: 0;
             justify-content: flex-start;
-            will-change: transform, opacity;
         }
         #slide-3 .feature-icon {
             width: 80px; height: 80px;
@@ -347,11 +341,21 @@
             justify-content: center;
             align-items: center;
             order: 1;
+            position: relative;
+        }
+        #slide-3 .feature-icon::before {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,229,255,0.3) 0%, transparent 70%);
+            pointer-events: none;
         }
         #slide-3 .feature-icon svg {
             width: 80px;
             height: 80px;
-            filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.7));
+            position: relative;
+            z-index: 1;
         }
         #slide-3 .feature-text {
             font-size: 48px;
@@ -401,7 +405,6 @@
             position: relative;
             overflow: hidden;
             min-height: 135px;
-            will-change: transform, opacity;
         }
         #slide-3 .cta-item .icon-wrap {
             width: 100px; height: 100px;
@@ -413,10 +416,19 @@
             z-index: 2;
             transform-origin: center center;
         }
+        #slide-3 .cta-item .icon-wrap::before {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,229,255,0.3) 0%, transparent 70%);
+            pointer-events: none;
+        }
         #slide-3 .cta-item .icon-wrap svg {
             width: 90px;
             height: 90px;
-            filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.7));
+            position: relative;
+            z-index: 1;
         }
         #slide-3 .cta-item .text-wrap {
             flex: 1;
@@ -464,7 +476,6 @@
             align-items: center;
             gap: 30px;
             z-index: 5;
-            will-change: transform;
         }
         #final-slide .final-heading {
             display: flex;
@@ -507,12 +518,10 @@
             background: linear-gradient(90deg, rgba(0, 180, 216, 0.15) 0%, rgba(0, 229, 255, 0.06) 100%);
             border: 2px solid rgba(0, 229, 255, 0.55);
             opacity: 0;
-            will-change: transform, opacity;
         }
         #final-slide .final-cta .dm-icon {
             width: 55px;
             height: 55px;
-            filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.7));
         }
         #final-slide .final-cta .dm-text {
             font-size: 46px;
@@ -536,9 +545,31 @@
             opacity: 0;
             z-index: 1;
         }
+
+        /* Loading Screen */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            color: #00e5ff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            letter-spacing: 8px;
+            transition: opacity 0.5s ease;
+        }
+        #loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
+    <div id="loader">LOADING...</div>
+
     <div id="stage">
         <div id="slide-1" class="slide">
             <div class="house-wrapper">
@@ -746,18 +777,48 @@
             }
         });
 
-        document.addEventListener("DOMContentLoaded", () => {
-            fitStage();
+        /* ============================================================
+           PRELOAD ALL IMAGES BEFORE STARTING THE ANIMATION
+           این بخش تضمین می‌کند که هیچ عکسی وسط انیمیشن لود نشود
+           ============================================================ */
+        const imagesToPreload = [
+            'home-left.png', 'logo.png',
+            'item1.png','item2.png','item3.png','item4.png',
+            'item5.png','item6.png','item7.png','item8.png',
+            'icon1.png','icon2.png','icon3.png','icon4.png',
+            'icon5.png','icon6.png','icon7.png','icon8.png'
+        ];
 
-            gsap.ticker.lagSmoothing(500, 33);
+        let loadedCount = 0;
+        const totalImages = imagesToPreload.length;
+        const loaderEl = document.getElementById('loader');
+
+        function onImageDone() {
+            loadedCount++;
+            if (loadedCount === totalImages) {
+                loaderEl.classList.add('hidden');
+                setTimeout(() => { loaderEl.style.display = 'none'; }, 500);
+                startAnimation();
+            }
+        }
+
+        imagesToPreload.forEach(function (src) {
+            const img = new Image();
+            img.onload = onImageDone;
+            img.onerror = onImageDone;
+            img.src = BASE_URL + src;
+        });
+
+        function startAnimation() {
             gsap.config({ force3D: true, nullTargetWarn: false });
+            gsap.ticker.lagSmoothing(1000, 60);
 
-            function buildCharsFromText(container, text, highlightFirst = false) {
+            function buildCharsFromText(container, text, highlightFirst) {
                 container.innerHTML = '';
                 const parts = text.split('|');
                 let isFirst = true;
-                parts.forEach(part => {
-                    part.split('').forEach(ch => {
+                parts.forEach(function (part) {
+                    part.split('').forEach(function (ch) {
                         const s = document.createElement('span');
                         s.textContent = ch;
                         if (highlightFirst && isFirst) s.className = 'highlight';
@@ -773,10 +834,10 @@
             }
 
             function buildStampChars() {
-                document.querySelectorAll('#slide-3 .stamp-text .line').forEach(line => {
+                document.querySelectorAll('#slide-3 .stamp-text .line').forEach(function (line) {
                     const text = line.getAttribute('data-text');
                     line.innerHTML = '';
-                    text.split('').forEach(ch => {
+                    text.split('').forEach(function (ch) {
                         const s = document.createElement('span');
                         s.textContent = ch;
                         line.appendChild(s);
@@ -785,10 +846,10 @@
             }
 
             function buildFinalHeading() {
-                document.querySelectorAll('#final-slide .final-heading .line').forEach(line => {
+                document.querySelectorAll('#final-slide .final-heading .line').forEach(function (line) {
                     const text = line.getAttribute('data-text');
                     line.innerHTML = '';
-                    text.split('').forEach(ch => {
+                    text.split('').forEach(function (ch) {
                         const s = document.createElement('span');
                         if (ch === ' ') s.innerHTML = '&nbsp;';
                         else s.textContent = ch;
@@ -801,17 +862,17 @@
             buildFinalHeading();
 
             const featureTexts = document.querySelectorAll('#slide-3 .feature-text');
-            featureTexts.forEach(el => {
+            featureTexts.forEach(function (el) {
                 buildCharsFromText(el, el.getAttribute('data-text'), true);
             });
 
             const ctaTexts = document.querySelectorAll('#slide-3 .cta-item .text');
-            ctaTexts.forEach(el => {
+            ctaTexts.forEach(function (el) {
                 const text = el.getAttribute('data-text');
                 el.innerHTML = '';
                 const words = text.split(' ');
-                words.forEach((word, wIdx) => {
-                    word.split('').forEach(ch => {
+                words.forEach(function (word, wIdx) {
+                    word.split('').forEach(function (ch) {
                         const s = document.createElement('span');
                         s.textContent = ch;
                         el.appendChild(s);
@@ -834,66 +895,74 @@
             let currentIndex = 0;
             let slidesShown = 1;
             let carouselInterval;
-            let iconAnimated = new Set();
 
             const positions = [
                 { x: 0,   y: 0,  rotation: -3, scale: 1,    opacity: 1,    zIndex: 100 },
                 { x: 50,  y: 12, rotation: 3,  scale: 0.95, opacity: 1,    zIndex: 90  },
-                { x: 90,  y: 24, rotation: 7,  scale: 0.9,  opacity: 1,    zIndex: 80  },
-                { x: 125, y: 36, rotation: 11, scale: 0.85, opacity: 0.8,  zIndex: 70  },
-                { x: 155, y: 48, rotation: 15, scale: 0.8,  opacity: 0.5,  zIndex: 60  },
-                { x: 180, y: 60, rotation: 19, scale: 0.75, opacity: 0.25, zIndex: 50  },
-                { x: 200, y: 72, rotation: 23, scale: 0.7,  opacity: 0.1,  zIndex: 40  },
-                { x: 215, y: 84, rotation: 26, scale: 0.65, opacity: 0,    zIndex: 30  }
+                { x: 90,  y: 24, rotation: 7,  scale: 0.9,  opacity: 0.85, zIndex: 80  },
+                { x: 125, y: 36, rotation: 11, scale: 0.85, opacity: 0.55, zIndex: 70  }
             ];
 
             gsap.set("#slide-2", { y: "100%" });
             gsap.set("#slide-3", { y: "100%" });
             gsap.set("#final-slide", { y: "100%" });
 
-            gsap.set(cards, { x: 0, y: 0, rotation: 0, scale: 0.5, opacity: 0, zIndex: 0, force3D: true });
-            cards.forEach(card => {
-                gsap.set(card.querySelector('.card-icon-wrap'), { x: 240, force3D: true });
+            // Cards beyond position 3 stay completely hidden - no per-frame animation
+            cards.forEach(function (card, idx) {
+                if (idx <= 3) {
+                    gsap.set(card, { x: 0, y: 0, rotation: 0, scale: 0.5, opacity: 0, zIndex: 0 });
+                } else {
+                    gsap.set(card, { x: 125, y: 36, rotation: 11, scale: 0.85, opacity: 0, zIndex: 0 });
+                }
+                gsap.set(card.querySelector('.card-icon-wrap'), { x: 240 });
             });
-            gsap.set("#slide-2 .text-container-s2", { xPercent: -50, yPercent: -50, y: 0, force3D: true });
-            gsap.set("#slide-2 .stack-wrapper", { xPercent: -50, yPercent: -50, y: 1600, opacity: 0, force3D: true });
 
-            gsap.set("#slide-3 .stamp-container", { xPercent: -50, yPercent: -50, scale: 2.4, y: -900, opacity: 0, rotation: -6, force3D: true });
+            gsap.set("#slide-2 .text-container-s2", { xPercent: -50, yPercent: -50, y: 0 });
+            gsap.set("#slide-2 .stack-wrapper", { yPercent: -50, xPercent: -50, y: 1600, opacity: 0 });
+
+            gsap.set("#slide-3 .stamp-container", { xPercent: -50, yPercent: -50, scale: 2.4, y: -900, opacity: 0, rotation: -6 });
             gsap.set(stampChars, { opacity: 0 });
             gsap.set("#slide-3 .indicator-dot", { opacity: 0, scale: 0, y: 0 });
             gsap.set("#slide-3 .stamp-border", { opacity: 0, scale: 0.9 });
             gsap.set("#slide-3 .impact-ring", { opacity: 0, width: 200, height: 200, borderWidth: 5 });
             gsap.set("#slide-3 .flash-overlay", { opacity: 0 });
-            gsap.set("#slide-3 .features-wrapper", { xPercent: -50, yPercent: -50, opacity: 0, force3D: true });
+            gsap.set("#slide-3 .features-wrapper", { xPercent: -50, yPercent: -50, opacity: 0 });
             gsap.set(featureItems, { opacity: 0 });
-            featureTexts.forEach(el => gsap.set(el.children, { opacity: 0, x: 30 }));
-            gsap.set("#slide-3 .cta-wrapper", { xPercent: -50, yPercent: -50, opacity: 0, force3D: true });
+            featureTexts.forEach(function (el) { gsap.set(el.children, { opacity: 0, y: 12 }); });
+            gsap.set("#slide-3 .cta-wrapper", { xPercent: -50, yPercent: -50, opacity: 0 });
             gsap.set("#slide-3 .cta-title span", { opacity: 0, y: 40 });
             gsap.set(ctaItems, { opacity: 0, y: 60 });
-            ctaItems.forEach(item => {
+            ctaItems.forEach(function (item) {
                 const icon = item.querySelector('.icon-wrap');
                 const txt = item.querySelector('.text');
-                gsap.set(icon, { x: 220, force3D: true });
-                gsap.set(txt.children, { opacity: 0, x: 30 });
+                gsap.set(icon, { x: 220 });
+                gsap.set(txt.children, { opacity: 0, y: 12 });
             });
 
-            gsap.set("#final-slide .final-content", { xPercent: -50, yPercent: -50, force3D: true });
-            gsap.set(finalLines, { opacity: 0, x: 60, filter: "blur(8px)" });
+            gsap.set("#final-slide .final-content", { xPercent: -50, yPercent: -50 });
+            gsap.set(finalLines, { opacity: 0, y: 30 });
             gsap.set("#final-slide .final-neon-line", { opacity: 0, scaleX: 0, transformOrigin: "center center" });
-            gsap.set("#final-slide .final-cta", { opacity: 0, y: 40, scale: 0.9, force3D: true });
-            gsap.set("#final-slide .final-cta .dm-text span", { opacity: 0, x: 20 });
-            gsap.set("#final-slide .final-cta .dm-icon", { opacity: 0, x: -20 });
+            gsap.set("#final-slide .final-cta", { opacity: 0, y: 40, scale: 0.9 });
+            gsap.set("#final-slide .final-cta .dm-text span", { opacity: 0 });
+            gsap.set("#final-slide .final-cta .dm-icon", { opacity: 0 });
             gsap.set("#final-slide .final-glow", { opacity: 0, scale: 0.6 });
 
             function updateStack() {
-                cards.forEach((card, index) => {
+                cards.forEach(function (card, index) {
                     let stackPos = index - currentIndex;
                     if (stackPos < 0) stackPos += cards.length;
-                    const pos = stackPos >= positions.length ? positions[positions.length - 1] : positions[stackPos];
+
+                    // Only animate the 4 visible cards - rest stay hidden at fixed position
+                    if (stackPos > 3) {
+                        gsap.set(card, { opacity: 0, zIndex: 0 });
+                        return;
+                    }
+
+                    const pos = positions[stackPos];
                     gsap.to(card, {
                         x: pos.x, y: pos.y, rotation: pos.rotation, scale: pos.scale,
                         opacity: pos.opacity, zIndex: pos.zIndex,
-                        duration: 0.9, ease: "power2.out", force3D: true
+                        duration: 0.85, ease: "power2.out"
                     });
                 });
             }
@@ -902,23 +971,19 @@
                 const icon = card.querySelector('.card-icon-wrap');
                 const titleEl = card.querySelector('.card-title');
                 const text = card.getAttribute('data-title');
-                const cardIdx = card.getAttribute('data-index');
 
-                if (!iconAnimated.has(cardIdx)) {
-                    gsap.to(icon, { x: 0, duration: 0.9, ease: "power2.inOut", force3D: true });
-                    iconAnimated.add(cardIdx);
-                }
+                gsap.to(icon, { x: 0, duration: 0.85, ease: "power2.inOut" });
 
                 titleEl.innerHTML = '';
-                text.split('').forEach(char => {
+                text.split('').forEach(function (char) {
                     const span = document.createElement('span');
                     span.textContent = char;
                     titleEl.appendChild(span);
                 });
 
                 gsap.fromTo(titleEl.children,
-                    { x: 40, opacity: 0 },
-                    { x: 0, opacity: 1, duration: 0.6, stagger: 0.06, ease: "power2.out", delay: 0.3, force3D: true }
+                    { opacity: 0, y: 15 },
+                    { opacity: 1, y: 0, duration: 0.5, stagger: 0.045, ease: "power2.out", delay: 0.25 }
                 );
             }
 
@@ -933,8 +998,7 @@
                     opacity: 0,
                     duration: 0.65,
                     ease: "power2.in",
-                    force3D: true,
-                    onComplete: () => {
+                    onComplete: function () {
                         currentIndex = currentIndex + 1;
                         slidesShown++;
                         updateStack();
@@ -946,11 +1010,12 @@
             function startSlide2Carousel() {
                 animateCardContent(cards[0]);
                 updateStack();
-                carouselInterval = setInterval(nextCard, 2200);
+                carouselInterval = setInterval(nextCard, 2600);
             }
 
             const masterTl = gsap.timeline({ delay: 0.2 });
 
+            /* ===== SLIDE 1 ===== */
             masterTl
                 .fromTo("#slide-1 .left-house",
                     { opacity: 0, scale: 1.05 },
@@ -968,42 +1033,41 @@
                     { opacity: 0, x: -100 },
                     { opacity: 1, x: 0, duration: 0.8, ease: "power4.out" }, 2.2)
                 .to("#slide-1 .neon-line",
-                    { scaleX: 1, opacity: 1, duration: 1.1, ease: "power4.inOut" }, 2.9)
-                .to("#slide-1 .neon-line",
-                    {
-                        boxShadow: "0 0 15px rgba(255,255,255,0.9), 0 0 30px rgba(0,229,255,0.8), 0 0 60px rgba(0,180,216,0.6)",
-                        duration: 1.1, repeat: 1, yoyo: true, ease: "sine.inOut"
-                    }, 4.0);
+                    { scaleX: 1, opacity: 1, duration: 1.1, ease: "power4.inOut" }, 2.9);
 
+            /* ===== TRANSITION 1 → 2 ===== */
             masterTl
-                .to("#slide-1", { y: "-100%", duration: 0.9, ease: "power2.inOut" }, 5.6)
+                .to("#slide-1", { y: "-100%", duration: 0.9, ease: "power2.inOut" }, 5.0)
                 .to("#slide-2", { y: "0%", duration: 0.9, ease: "power2.inOut" }, "<");
 
+            /* ===== SLIDE 2 ===== */
             masterTl
                 .fromTo("#slide-2 .s2-text-1 span",
-                    { x: 80, opacity: 0, filter: "blur(8px)" },
-                    { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.9, stagger: 0.09, ease: "power3.out" })
+                    { opacity: 0, y: 20 },
+                    { opacity: 1, y: 0, duration: 0.7, stagger: 0.07, ease: "power2.out" })
                 .fromTo("#slide-2 .s2-text-2 span",
-                    { x: 80, opacity: 0, filter: "blur(8px)" },
-                    { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.9, stagger: 0.09, ease: "power3.out" }, "-=0.6")
+                    { opacity: 0, y: 20 },
+                    { opacity: 1, y: 0, duration: 0.7, stagger: 0.07, ease: "power2.out" }, "-=0.45")
                 .fromTo("#slide-2 .s2-text-3 span",
-                    { x: 80, opacity: 0, filter: "blur(8px)" },
-                    { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.9, stagger: 0.09, ease: "power3.out" }, "-=0.6")
+                    { opacity: 0, y: 20 },
+                    { opacity: 1, y: 0, duration: 0.7, stagger: 0.07, ease: "power2.out" }, "-=0.45")
                 .to("#slide-2 .s2-neon-line",
-                    { opacity: 1, duration: 0.9, ease: "power2.out" }, "-=0.5")
+                    { opacity: 1, duration: 0.8, ease: "power2.out" }, "-=0.4")
                 .to("#slide-2 .text-container-s2",
                     { y: -600, duration: 1.0, ease: "power2.inOut" }, "+=0.05")
                 .to("#slide-2 .stack-wrapper",
                     { y: 240, opacity: 1, duration: 1.2, ease: "power2.out" }, "<")
-                .add(() => startSlide2Carousel(), "-=0.4");
+                .add(function () { startSlide2Carousel(); }, "-=0.4");
 
-            masterTl.to({}, { duration: 19 });
+            masterTl.to({}, { duration: 20 });
 
+            /* ===== TRANSITION 2 → 3 ===== */
             masterTl
-                .add(() => { if (carouselInterval) clearInterval(carouselInterval); })
+                .add(function () { if (carouselInterval) clearInterval(carouselInterval); })
                 .to("#slide-2", { y: "-100%", duration: 0.9, ease: "power2.inOut" })
                 .to("#slide-3", { y: "0%", duration: 0.9, ease: "power2.inOut" }, "<");
 
+            /* ===== SLIDE 3 ===== */
             masterTl
                 .to("#slide-3 .stamp-container", { opacity: 1, duration: 0.15 })
                 .to("#slide-3 .stamp-container", {
@@ -1052,16 +1116,16 @@
                 }, "<")
                 .to(featureItems[0], { opacity: 1, duration: 0.01 })
                 .fromTo(featureItems[0], { x: 300 }, { x: 0, duration: 0.65, ease: "power2.out" }, "<")
-                .to(featureTexts[0].children, { opacity: 1, x: 0, duration: 0.4, stagger: 0.03, ease: "power2.out", delay: 0.3 }, "<")
+                .to(featureTexts[0].children, { opacity: 1, y: 0, duration: 0.4, stagger: 0.03, ease: "power2.out", delay: 0.3 }, "<")
                 .to(featureItems[1], { opacity: 1, duration: 0.01 }, "+=0.4")
                 .fromTo(featureItems[1], { x: 300 }, { x: 0, duration: 0.65, ease: "power2.out" }, "<")
-                .to(featureTexts[1].children, { opacity: 1, x: 0, duration: 0.4, stagger: 0.03, ease: "power2.out", delay: 0.3 }, "<")
+                .to(featureTexts[1].children, { opacity: 1, y: 0, duration: 0.4, stagger: 0.03, ease: "power2.out", delay: 0.3 }, "<")
                 .to(featureItems[2], { opacity: 1, duration: 0.01 }, "+=0.4")
                 .fromTo(featureItems[2], { x: 300 }, { x: 0, duration: 0.65, ease: "power2.out" }, "<")
-                .to(featureTexts[2].children, { opacity: 1, x: 0, duration: 0.4, stagger: 0.03, ease: "power2.out", delay: 0.3 }, "<")
+                .to(featureTexts[2].children, { opacity: 1, y: 0, duration: 0.4, stagger: 0.03, ease: "power2.out", delay: 0.3 }, "<")
                 .to(featureItems[3], { opacity: 1, duration: 0.01 }, "+=0.4")
                 .fromTo(featureItems[3], { x: 300 }, { x: 0, duration: 0.65, ease: "power2.out" }, "<")
-                .to(featureTexts[3].children, { opacity: 1, x: 0, duration: 0.4, stagger: 0.03, ease: "power2.out", delay: 0.3 }, "<")
+                .to(featureTexts[3].children, { opacity: 1, y: 0, duration: 0.4, stagger: 0.03, ease: "power2.out", delay: 0.3 }, "<")
                 .to(featureItems, {
                     x: -1400, opacity: 0, duration: 0.8,
                     stagger: 0.08, ease: "power2.in"
@@ -1073,30 +1137,30 @@
                     opacity: 1, y: 0, duration: 0.6, stagger: 0.12, ease: "power2.out"
                 })
                 .to(ctaItems[0], { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, "+=0.25")
-                .add(() => {
+                .add(function () {
                     const icon = ctaItems[0].querySelector('.icon-wrap');
                     const txt = ctaItems[0].querySelector('.text');
                     gsap.to(icon, { x: 0, duration: 1.0, ease: "power2.inOut" });
-                    gsap.to(txt.children, { opacity: 1, x: 0, duration: 0.45, stagger: 0.025, ease: "power2.out", delay: 0.35 });
+                    gsap.to(txt.children, { opacity: 1, y: 0, duration: 0.45, stagger: 0.025, ease: "power2.out", delay: 0.35 });
                 })
                 .to(ctaItems[1], { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, "+=0.3")
-                .add(() => {
+                .add(function () {
                     const icon = ctaItems[1].querySelector('.icon-wrap');
                     const txt = ctaItems[1].querySelector('.text');
                     gsap.to(icon, { x: 0, duration: 1.0, ease: "power2.inOut" });
-                    gsap.to(txt.children, { opacity: 1, x: 0, duration: 0.45, stagger: 0.025, ease: "power2.out", delay: 0.35 });
+                    gsap.to(txt.children, { opacity: 1, y: 0, duration: 0.45, stagger: 0.025, ease: "power2.out", delay: 0.35 });
                 })
                 .to(ctaItems[2], { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, "+=0.3")
-                .add(() => {
+                .add(function () {
                     const icon = ctaItems[2].querySelector('.icon-wrap');
                     const txt = ctaItems[2].querySelector('.text');
                     gsap.to(icon, { x: 0, duration: 1.0, ease: "power2.inOut" });
-                    gsap.to(txt.children, { opacity: 1, x: 0, duration: 0.45, stagger: 0.025, ease: "power2.out", delay: 0.35 });
+                    gsap.to(txt.children, { opacity: 1, y: 0, duration: 0.45, stagger: 0.025, ease: "power2.out", delay: 0.35 });
                 })
                 .to("#slide-3 .phone-item .fill-overlay", {
                     width: "100%", duration: 1.0, ease: "power2.inOut"
                 }, "+=0.6")
-                .add(() => {
+                .add(function () {
                     document.querySelector('#slide-3 .phone-item').classList.add('filled');
                     const phoneIcon = document.querySelector('#slide-3 .phone-item .icon-wrap');
                     gsap.fromTo(phoneIcon,
@@ -1105,7 +1169,7 @@
                             rotation: 18, duration: 0.09, repeat: 21,
                             yoyo: true, ease: "power2.inOut",
                             transformOrigin: "center center",
-                            onComplete: () => { gsap.to(phoneIcon, { rotation: 0, duration: 0.15, ease: "power2.out" }); }
+                            onComplete: function () { gsap.to(phoneIcon, { rotation: 0, duration: 0.15, ease: "power2.out" }); }
                         }
                     );
                 })
@@ -1113,16 +1177,18 @@
                     duration: 0.7, ease: "power2.out"
                 }, "-=0.35");
 
+            /* ===== TRANSITION 3 → FINAL ===== */
             masterTl
                 .to("#slide-3", { y: "-100%", duration: 0.9, ease: "power2.inOut" }, "+=1.0")
                 .to("#final-slide", { y: "0%", duration: 0.9, ease: "power2.inOut" }, "<");
 
+            /* ===== FINAL SLIDE ===== */
             masterTl
                 .to("#final-slide .final-glow", {
                     opacity: 1, scale: 1, duration: 1.1, ease: "power2.out"
                 }, "-=0.6")
                 .to(finalLines, {
-                    opacity: 1, x: 0, filter: "blur(0px)",
+                    opacity: 1, y: 0,
                     duration: 0.9, stagger: 0.07, ease: "power2.out"
                 }, "-=0.8")
                 .to("#final-slide .final-neon-line", {
@@ -1132,16 +1198,13 @@
                     opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "back.out(1.4)"
                 }, "-=0.4")
                 .to("#final-slide .final-cta .dm-icon", {
-                    opacity: 1, x: 0, duration: 0.5, ease: "power2.out"
+                    opacity: 1, duration: 0.5, ease: "power2.out"
                 }, "-=0.4")
                 .to("#final-slide .final-cta .dm-text span", {
-                    opacity: 1, x: 0, duration: 0.45,
+                    opacity: 1, duration: 0.45,
                     stagger: 0.035, ease: "power2.out"
-                }, "-=0.4")
-                .to("#final-slide .final-cta", {
-                    duration: 1.0, repeat: -1, yoyo: true, ease: "sine.inOut"
-                });
-        });
+                }, "-=0.4");
+        }
     </script>
 </body>
 </html>
