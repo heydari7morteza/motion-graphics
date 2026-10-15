@@ -2,21 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Leo Blue Group - Full Presentation</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
             background-color: #000;
+            font-family: 'Montserrat', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            overflow: hidden;
-            font-family: 'Montserrat', sans-serif;
         }
+
         #stage {
             position: relative;
             width: 1080px;
@@ -25,6 +36,8 @@
             transform: scale(0.35);
             overflow: hidden;
             box-shadow: 0 0 60px rgba(0, 180, 216, 0.25);
+            will-change: transform;
+            flex-shrink: 0;
         }
         .slide {
             position: absolute;
@@ -719,13 +732,27 @@
 
     <script>
         /* ============================================================
+           DYNAMIC STAGE SCALING
+           مقیاس خودکار بر اساس اندازه صفحه — روی گوشی، لپ‌تاپ و دسکتاپ
+           ============================================================ */
+        function fitStage() {
+            const stage = document.getElementById('stage');
+            if (!stage) return;
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            const scale = Math.min(vw / 1080, vh / 1920);
+            stage.style.transform = 'scale(' + scale + ')';
+            stage.style.transformOrigin = 'center center';
+        }
+        window.addEventListener('resize', fitStage);
+        window.addEventListener('orientationchange', fitStage);
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', fitStage);
+        }
+        fitStage();
+
+        /* ============================================================
            BASE_URL — آدرس پایه‌ی همه‌ی تصاویر
-           ============================================================
-           برای مشاهده روی گوشی، این مقدار را تغییر دهید.
-           مثال: اگر همه فایل‌ها (HTML + عکس‌ها) در یک پوشه روی گوشی
-           هستند، همان "./" را نگه دارید.
-           اگر روی سرور آنلاین هستند:
-               const BASE_URL = "https://your-site.com/lb-group/";
            ============================================================ */
         const BASE_URL = "./";
 
@@ -737,6 +764,7 @@
         });
 
         document.addEventListener("DOMContentLoaded", () => {
+            fitStage();
 
             function buildCharsFromText(container, text, highlightFirst = false) {
                 container.innerHTML = '';
@@ -985,7 +1013,6 @@
                     { y: 240, opacity: 1, duration: 1.2, ease: "power2.out" }, "<")
                 .add(() => startSlide2Carousel(), "-=0.4");
 
-            /* 8 cards × 2.2s = 17.6s + 1.4s buffer = 19s */
             masterTl.to({}, { duration: 19 });
 
             /* ===== TRANSITION 2 → 3 ===== */
