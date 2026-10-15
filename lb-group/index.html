@@ -55,20 +55,26 @@
             width: 114%;
             height: auto;
             z-index: 1;
+            overflow: hidden;
         }
         #slide-1 .left-house {
             width: 100%;
             height: auto;
             display: block;
             opacity: 0.55;
-            -webkit-mask-image:
-                linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%),
-                linear-gradient(to bottom, transparent 0%, black 8%, black 42%, transparent 88%);
-            mask-image:
-                linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%),
-                linear-gradient(to bottom, transparent 0%, black 8%, black 42%, transparent 88%);
-            -webkit-mask-composite: source-in;
-            mask-composite: intersect;
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+        }
+        #slide-1 .house-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 55%;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 55%, #000 100%);
+            pointer-events: none;
+            z-index: 2;
         }
         #slide-1 .content-wrapper {
             position: absolute;
@@ -188,9 +194,9 @@
             height: 24%;
             display: flex;
             flex-direction: row;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
-            gap: 0;
+            gap: 30px;
             background: #0d1528;
             position: relative;
             z-index: 2;
@@ -207,6 +213,7 @@
             background: transparent;
             border: none;
             position: relative;
+            order: 1;
         }
         #slide-2 .card-icon-wrap img {
             width: 100px;
@@ -217,8 +224,9 @@
             min-height: 60px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             overflow: hidden;
+            order: 2;
         }
         #slide-2 .card-title {
             font-size: 48px;
@@ -589,57 +597,57 @@
                     <div class="stacked-card" data-title="CLEANING">
                         <div class="card-img-container"><img src="item1.png" class="card-img" alt="Cleaning"></div>
                         <div class="card-content">
-                            <div class="card-title-wrap"><div class="card-title"></div></div>
                             <div class="card-icon-wrap"><img src="icon1.png" alt="Icon"></div>
+                            <div class="card-title-wrap"><div class="card-title"></div></div>
                         </div>
                     </div>
                     <div class="stacked-card" data-title="VALETING">
                         <div class="card-img-container"><img src="item2.png" class="card-img" alt="Valeting"></div>
                         <div class="card-content">
-                            <div class="card-title-wrap"><div class="card-title"></div></div>
                             <div class="card-icon-wrap"><img src="icon2.png" alt="Icon"></div>
+                            <div class="card-title-wrap"><div class="card-title"></div></div>
                         </div>
                     </div>
                     <div class="stacked-card" data-title="HANDYMAN">
                         <div class="card-img-container"><img src="item3.png" class="card-img" alt="Handyman"></div>
                         <div class="card-content">
-                            <div class="card-title-wrap"><div class="card-title"></div></div>
                             <div class="card-icon-wrap"><img src="icon3.png" alt="Icon"></div>
+                            <div class="card-title-wrap"><div class="card-title"></div></div>
                         </div>
                     </div>
                     <div class="stacked-card" data-title="WASTE">
                         <div class="card-img-container"><img src="item4.png" class="card-img" alt="Waste"></div>
                         <div class="card-content">
-                            <div class="card-title-wrap"><div class="card-title"></div></div>
                             <div class="card-icon-wrap"><img src="icon4.png" alt="Icon"></div>
+                            <div class="card-title-wrap"><div class="card-title"></div></div>
                         </div>
                     </div>
                     <div class="stacked-card" data-title="REMOVALS">
                         <div class="card-img-container"><img src="item5.png" class="card-img" alt="Removals"></div>
                         <div class="card-content">
-                            <div class="card-title-wrap"><div class="card-title"></div></div>
                             <div class="card-icon-wrap"><img src="icon5.png" alt="Icon"></div>
+                            <div class="card-title-wrap"><div class="card-title"></div></div>
                         </div>
                     </div>
                     <div class="stacked-card" data-title="EXTERIOR">
                         <div class="card-img-container"><img src="item6.png" class="card-img" alt="Exterior"></div>
                         <div class="card-content">
-                            <div class="card-title-wrap"><div class="card-title"></div></div>
                             <div class="card-icon-wrap"><img src="icon6.png" alt="Icon"></div>
+                            <div class="card-title-wrap"><div class="card-title"></div></div>
                         </div>
                     </div>
                     <div class="stacked-card" data-title="LOCKSMITH">
                         <div class="card-img-container"><img src="item7.png" class="card-img" alt="Locksmith"></div>
                         <div class="card-content">
-                            <div class="card-title-wrap"><div class="card-title"></div></div>
                             <div class="card-icon-wrap"><img src="icon7.png" alt="Icon"></div>
+                            <div class="card-title-wrap"><div class="card-title"></div></div>
                         </div>
                     </div>
                     <div class="stacked-card" data-title="LANDSCAPING">
                         <div class="card-img-container"><img src="item8.png" class="card-img" alt="Landscaping"></div>
                         <div class="card-content">
-                            <div class="card-title-wrap"><div class="card-title"></div></div>
                             <div class="card-icon-wrap"><img src="icon8.png" alt="Icon"></div>
+                            <div class="card-title-wrap"><div class="card-title"></div></div>
                         </div>
                     </div>
                 </div>
@@ -903,8 +911,9 @@
             gsap.set("#slide-3", { y: "100%" });
             gsap.set("#final-slide", { y: "100%" });
 
-            /* Cards initial state - front/middle/back + hidden */
+            /* Set initial card positions + icon + title states */
             cards.forEach(function (card, idx) {
+                /* Card position */
                 if (idx === 0) {
                     gsap.set(card, { x: 0, y: 0, rotation: -3, scale: 1, opacity: 1, zIndex: 100 });
                 } else if (idx === 1) {
@@ -914,26 +923,18 @@
                 } else {
                     gsap.set(card, { x: 150, y: 40, rotation: 10, scale: 0.85, opacity: 0, zIndex: 0 });
                 }
-            });
 
-            /* Icon and title initial states:
-               - Front card (idx 0): icon at x:0, text visible
-               - Middle card (idx 1): icon at x:70 (to the right), text hidden
-               - Back card (idx 2): icon at x:70, text hidden
-               - Others: icon at x:70, text hidden */
-            const iconPositions = [];
-            cards.forEach(function(card, idx) {
+                /* Icon state: front card at 0, others at 300 (offscreen right) */
                 const icon = card.querySelector('.card-icon-wrap');
                 if (idx === 0) {
                     gsap.set(icon, { x: 0 });
-                    iconPositions.push(0);
                 } else {
-                    gsap.set(icon, { x: 70 });
-                    iconPositions.push(70);
+                    gsap.set(icon, { x: 300 });
                 }
-                /* Set all title chars hidden except front */
+
+                /* Title chars hidden for all except front */
                 if (idx === 0) {
-                    gsap.set(cardTitles[idx].spans, { opacity: 1 });
+                    gsap.set(cardTitles[idx].spans, { opacity: 0 });
                 } else {
                     gsap.set(cardTitles[idx].spans, { opacity: 0 });
                 }
@@ -989,26 +990,26 @@
                 });
             }
 
-            /* ---------- ANIMATE ICON + TITLE FOR FRONT CARD ---------- */
+            /* ---------- ANIMATE FRONT CARD (icon slides from right to left + text writes) ---------- */
             function animateFrontCard(cardIndex) {
                 const card = cards[cardIndex];
                 const icon = card.querySelector('.card-icon-wrap');
                 const t = cardTitles[cardIndex];
 
-                /* Icon starts to the right, moves smoothly left */
-                gsap.set(icon, { x: 70 });
+                /* Icon starts off to the right, then slides to its left position */
+                gsap.set(icon, { x: 300 });
                 gsap.to(icon, {
                     x: 0,
                     duration: 1.1,
-                    ease: "power2.out"
+                    ease: "power2.inOut"
                 });
 
-                /* Title chars appear just after icon starts moving */
+                /* Title chars appear simultaneously with slight stagger */
                 gsap.set(t.spans, { opacity: 0 });
                 gsap.to(t.spans, {
                     opacity: 1,
-                    duration: 0.4,
-                    stagger: 0.045,
+                    duration: 0.45,
+                    stagger: 0.03,
                     ease: "power2.out",
                     delay: 0.35
                 });
@@ -1044,11 +1045,11 @@
             /* ---------- MASTER TIMELINE ---------- */
             const masterTl = gsap.timeline({ delay: 0.2 });
 
-            /* SLIDE 1 */
+            /* SLIDE 1 - no opacity animation on bg image, only scale from CSS state */
             masterTl
                 .fromTo("#slide-1 .left-house",
-                    { opacity: 0, scale: 1.05 },
-                    { opacity: 0.55, scale: 1, duration: 1.5, ease: "power3.out" }, 0)
+                    { scale: 1.05 },
+                    { scale: 1, duration: 1.5, ease: "power3.out" }, 0)
                 .fromTo("#slide-1 .logo",
                     { opacity: 0, scale: 0.7, y: 30 },
                     { opacity: 1, scale: 1, y: 0, duration: 1.1, ease: "back.out(1.5)" }, 0.7)
@@ -1088,7 +1089,6 @@
                     { y: 240, opacity: 1, duration: 1.2, ease: "power2.out" }, "<")
                 .add(function () { startSlide2Carousel(); }, "-=0.4");
 
-            /* 7 transitions × 2.4s + buffer */
             masterTl.to({}, { duration: 20 });
 
             /* TRANSITION 2 → 3 */
@@ -1192,19 +1192,16 @@
                 .add(function () {
                     document.querySelector('#slide-3 .phone-item').classList.add('filled');
                     const phoneIcon = document.querySelector('#slide-3 .phone-item .icon-wrap');
-                    /* Longer, smoother ring with slight scale up */
-                    gsap.to(phoneIcon, {
-                        scale: 1.25,
-                        duration: 0.35,
-                        ease: "power2.out",
-                        yoyo: true,
-                        repeat: 15
-                    });
+                    /* Bigger and longer ring: scale + rotation with more repeats */
+                    gsap.fromTo(phoneIcon,
+                        { scale: 1 },
+                        { scale: 1.3, duration: 0.4, ease: "power2.out", yoyo: true, repeat: 11 }
+                    );
                     gsap.fromTo(phoneIcon,
                         { rotation: 0 },
                         {
-                            rotation: 20, duration: 0.1,
-                            repeat: 45,
+                            rotation: 22, duration: 0.1,
+                            repeat: 55,
                             yoyo: true, ease: "power2.inOut",
                             transformOrigin: "center center",
                             onComplete: function () { gsap.to(phoneIcon, { rotation: 0, duration: 0.2, ease: "power2.out" }); }
