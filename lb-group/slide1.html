@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leo Blue Group - Slide 1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        #slide-1 {
+            position: relative;
+            width: 1080px;
+            height: 1920px;
+            background: radial-gradient(circle at center, #0a1128 0%, #000000 100%);
+            overflow: hidden;
+            transform-origin: center center;
+            transform: scale(0.35);
+            box-shadow: 0 0 50px rgba(0, 180, 216, 0.2);
+        }
+
+        .house-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            z-index: 1;
+        }
+
+        .left-house {
+            width: 100%;
+            height: auto;
+            display: block;
+            opacity: 0;
+            -webkit-mask-image:
+                linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%),
+                linear-gradient(to bottom, transparent 0%, black 10%, black 55%, transparent 100%);
+            mask-image:
+                linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%),
+                linear-gradient(to bottom, transparent 0%, black 10%, black 55%, transparent 100%);
+            -webkit-mask-composite: source-in;
+            mask-composite: intersect;
+        }
+
+        .content-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-top: 200px;
+            z-index: 3;
+        }
+
+        .logo {
+            width: 550px;
+            height: auto;
+            margin-bottom: 40px;
+            opacity: 0;
+            filter: drop-shadow(0 0 30px rgba(0, 180, 216, 0.6));
+        }
+
+        .text-container {
+            display: flex;
+            gap: 15px;
+            font-size: 65px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .text-leo {
+            color: #ffffff;
+            opacity: 0;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+
+        .text-blue {
+            color: #00b4d8;
+            opacity: 0;
+            text-shadow: 0 0 25px rgba(0, 180, 216, 0.8);
+        }
+
+        .text-group {
+            color: #ffffff;
+            opacity: 0;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+
+        .neon-line {
+            margin-top: 25px;
+            height: 6px;
+            width: 65%;
+            border-radius: 6px;
+            background: linear-gradient(90deg, rgba(0,229,255,0) 0%, #00e5ff 30%, #ffffff 50%, #00e5ff 70%, rgba(0,229,255,0) 100%);
+            opacity: 0;
+            transform: scaleX(0);
+            transform-origin: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="slide-1">
+        <div class="house-wrapper">
+            <img src="home-left.png" alt="Home" class="left-house">
+        </div>
+
+        <div class="content-wrapper">
+            <img src="logo.png" alt="Leo Blue Logo" class="logo">
+
+            <div class="text-container">
+                <span class="text-leo">LEO</span>
+                <span class="text-blue">BLUE</span>
+                <span class="text-group">GROUP</span>
+            </div>
+
+            <div class="neon-line"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const tl = gsap.timeline({ repeat: -1, repeatDelay: 3 });
+
+            tl.fromTo(".left-house",
+                { opacity: 0, scale: 1.05 },
+                { opacity: 0.5, scale: 1, duration: 2, ease: "power3.out" },
+                0
+            )
+            .fromTo(".logo",
+                { opacity: 0, scale: 0.7, y: 30 },
+                { opacity: 1, scale: 1, y: 0, duration: 1.5, ease: "back.out(1.5)" },
+                1
+            )
+            .fromTo(".text-leo",
+                { opacity: 0, x: 100 },
+                { opacity: 1, x: 0, duration: 1, ease: "power4.out" },
+                2.5
+            )
+            .fromTo(".text-blue",
+                { opacity: 0, x: 50 },
+                { opacity: 1, x: 0, duration: 1, ease: "power4.out" },
+                2.7
+            )
+            .fromTo(".text-group",
+                { opacity: 0, x: -100 },
+                { opacity: 1, x: 0, duration: 1, ease: "power4.out" },
+                2.9
+            )
+            .to(".neon-line",
+                { scaleX: 1, opacity: 1, duration: 1.5, ease: "power4.inOut" },
+                3.8
+            )
+            .to(".neon-line",
+                {
+                    boxShadow: "0 0 15px rgba(255,255,255,0.9), 0 0 30px rgba(0,229,255,0.8), 0 0 60px rgba(0,180,216,0.6)",
+                    duration: 1.5,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut"
+                },
+                5.3
+            );
+        });
+    </script>
+</body>
+</html>

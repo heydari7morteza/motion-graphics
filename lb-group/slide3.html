@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leo Blue Group - Slide 3 + Final</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+        }
+        #stage {
+            position: relative;
+            width: 1080px;
+            height: 1920px;
+            transform-origin: center center;
+            transform: scale(0.35);
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(0, 180, 216, 0.2);
+        }
+        #slide-3, #final-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #0a1128 0%, #000000 100%);
+        }
+        #final-slide {
+            top: 100%;
+        }
+
+        .flash-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.35) 0%, rgba(0,229,255,0.12) 30%, transparent 65%);
+            pointer-events: none;
+            opacity: 0;
+            z-index: 100;
+        }
+
+        .stamp-container {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 50;
+            text-align: center;
+            transform-origin: center center;
+        }
+        .stamp-text {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+            position: relative;
+        }
+        .stamp-text .line {
+            font-size: 60px;
+            font-weight: 900;
+            letter-spacing: 6px;
+            color: #ffffff;
+            text-shadow:
+                0 0 14px rgba(255, 255, 255, 0.35),
+                0 0 30px rgba(0, 180, 216, 0.25);
+            display: flex;
+            gap: 2px;
+            justify-content: center;
+        }
+        .stamp-text .line span { display: inline-block; }
+        .stamp-text .line.highlight {
+            color: #00e5ff;
+            text-shadow:
+                0 0 18px rgba(0, 229, 255, 0.7),
+                0 0 38px rgba(0, 180, 216, 0.4);
+        }
+        .indicator-dot {
+            position: absolute;
+            left: -70px;
+            top: 27px;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #00e5ff;
+            box-shadow:
+                0 0 15px #00e5ff,
+                0 0 35px #00e5ff,
+                0 0 70px #00e5ff,
+                0 0 110px rgba(0,229,255,0.7);
+            opacity: 0;
+        }
+        .stamp-border {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 860px;
+            height: 420px;
+            border-radius: 24px;
+            pointer-events: none;
+            opacity: 0;
+            box-shadow:
+                0 0 4px rgba(0, 229, 255, 0.55),
+                0 0 12px rgba(0, 229, 255, 0.4),
+                0 0 26px rgba(0, 229, 255, 0.28),
+                0 0 55px rgba(0, 180, 216, 0.15),
+                inset 0 0 6px rgba(0, 229, 255, 0.35),
+                inset 0 0 18px rgba(0, 180, 216, 0.15),
+                inset 0 0 38px rgba(0, 180, 216, 0.06);
+        }
+        .impact-ring {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px; height: 300px;
+            border-radius: 50%;
+            border: 3px solid rgba(0, 229, 255, 0.7);
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .features-wrapper {
+            position: absolute;
+            top: 60%; left: 50%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            z-index: 10;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+        }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding: 0 90px;
+            opacity: 0;
+            justify-content: flex-start;
+        }
+        .feature-icon {
+            width: 80px; height: 80px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            order: 1;
+            filter: drop-shadow(0 0 12px rgba(0, 229, 255, 0.9)) drop-shadow(0 0 28px rgba(0, 180, 216, 0.5));
+        }
+        .feature-icon svg { width: 80px; height: 80px; }
+        .feature-text {
+            font-size: 48px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 2px;
+            text-shadow: 0 0 14px rgba(0, 229, 255, 0.5);
+            white-space: nowrap;
+            display: flex;
+            flex-wrap: nowrap;
+            order: 2;
+        }
+        .feature-text span { display: inline-block; }
+        .feature-text .highlight {
+            color: #00e5ff;
+            font-weight: 900;
+            text-shadow: 0 0 22px rgba(0, 229, 255, 0.9);
+        }
+
+        .cta-wrapper {
+            position: absolute;
+            top: 64%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 42px;
+            opacity: 0;
+        }
+        .cta-title {
+            font-size: 62px;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: 8px;
+            text-align: center;
+            text-shadow: 0 0 22px rgba(0, 229, 255, 0.55), 0 0 48px rgba(0, 180, 216, 0.28);
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        .cta-title span { display: inline-block; }
+        .cta-title .accent {
+            color: #00e5ff;
+            text-shadow: 0 0 26px rgba(0, 229, 255, 0.9), 0 0 52px rgba(0, 180, 216, 0.5);
+        }
+
+        .cta-item {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            width: 920px;
+            padding: 30px 50px;
+            border-radius: 22px;
+            background: linear-gradient(90deg, rgba(0, 180, 216, 0.08) 0%, rgba(0, 229, 255, 0.03) 100%);
+            border: 1px solid rgba(0, 229, 255, 0.32);
+            box-shadow: 0 0 18px rgba(0, 229, 255, 0.15), inset 0 0 20px rgba(0, 229, 255, 0.04);
+            position: relative;
+            overflow: hidden;
+            min-height: 135px;
+        }
+        .cta-item .icon-wrap {
+            width: 100px; height: 100px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            filter: drop-shadow(0 0 14px rgba(0, 229, 255, 0.85)) drop-shadow(0 0 30px rgba(0, 180, 216, 0.45));
+            position: relative;
+            z-index: 2;
+            transform-origin: center center;
+        }
+        .cta-item .icon-wrap svg { width: 90px; height: 90px; }
+        .cta-item .text-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+        }
+        .cta-item .text {
+            font-size: 40px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 2px;
+            line-height: 1.15;
+            white-space: normal;
+            display: flex;
+            flex-wrap: wrap;
+            text-shadow: 0 0 12px rgba(0, 229, 255, 0.4);
+        }
+        .cta-item .text span { display: inline-block; }
+
+        .phone-item .text {
+            font-size: 72px;
+            font-weight: 900;
+            letter-spacing: 6px;
+        }
+        .phone-item .fill-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 0%; height: 100%;
+            background: linear-gradient(90deg, rgba(0, 229, 255, 0.18) 0%, rgba(0, 180, 216, 0.08) 100%);
+            pointer-events: none;
+            z-index: 1;
+            border-radius: 22px;
+        }
+        .phone-item.filled .text {
+            color: #ffffff;
+            text-shadow: 0 0 16px rgba(0, 229, 255, 0.8), 0 0 32px rgba(0, 180, 216, 0.5);
+        }
+        .phone-item.filled .icon-wrap {
+            filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.9)) drop-shadow(0 0 42px rgba(0, 180, 216, 0.6));
+        }
+
+        /* --- Final Slide --- */
+        .final-content {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            z-index: 5;
+        }
+        .final-heading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .final-heading .line {
+            font-size: 78px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: #ffffff;
+            text-shadow:
+                0 0 18px rgba(255, 255, 255, 0.4),
+                0 0 42px rgba(0, 180, 216, 0.3);
+            display: flex;
+            gap: 2px;
+            justify-content: center;
+            white-space: nowrap;
+        }
+        .final-heading .line span { display: inline-block; }
+        .final-heading .line.accent {
+            color: #00e5ff;
+            text-shadow:
+                0 0 24px rgba(0, 229, 255, 0.85),
+                0 0 52px rgba(0, 180, 216, 0.55);
+            font-size: 88px;
+            letter-spacing: 6px;
+        }
+        .final-neon-line {
+            margin-top: 20px;
+            height: 5px;
+            width: 55%;
+            border-radius: 5px;
+            background: linear-gradient(90deg, rgba(0,229,255,0) 0%, #00e5ff 30%, #ffffff 50%, #00e5ff 70%, rgba(0,229,255,0) 100%);
+            box-shadow: 0 0 15px #00e5ff, 0 0 30px #00b4d8;
+            opacity: 0;
+        }
+        .final-cta {
+            margin-top: 60px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            padding: 30px 70px;
+            border-radius: 60px;
+            background: linear-gradient(90deg, rgba(0, 180, 216, 0.15) 0%, rgba(0, 229, 255, 0.06) 100%);
+            border: 2px solid rgba(0, 229, 255, 0.55);
+            box-shadow:
+                0 0 20px rgba(0, 229, 255, 0.35),
+                inset 0 0 22px rgba(0, 229, 255, 0.08);
+            opacity: 0;
+        }
+        .final-cta .dm-icon {
+            width: 55px;
+            height: 55px;
+            filter: drop-shadow(0 0 12px rgba(0, 229, 255, 0.9)) drop-shadow(0 0 26px rgba(0, 180, 216, 0.5));
+        }
+        .final-cta .dm-text {
+            font-size: 46px;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: 5px;
+            text-shadow: 0 0 18px rgba(0, 229, 255, 0.7), 0 0 38px rgba(0, 180, 216, 0.4);
+            display: flex;
+            gap: 2px;
+        }
+        .final-cta .dm-text span { display: inline-block; }
+        .final-cta .dm-text .accent {
+            color: #00e5ff;
+            text-shadow: 0 0 24px rgba(0, 229, 255, 1), 0 0 52px rgba(0, 180, 216, 0.6);
+        }
+        .final-glow {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 900px;
+            height: 900px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.12) 0%, rgba(0, 180, 216, 0.05) 30%, transparent 65%);
+            pointer-events: none;
+            opacity: 0;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div id="stage">
+        <div id="slide-3">
+            <div class="flash-overlay"></div>
+
+            <div class="stamp-container">
+                <div class="stamp-border"></div>
+                <div class="stamp-text">
+                    <div class="line" data-text="RELIABLE."></div>
+                    <div class="line highlight" data-text="PROFESSIONAL."></div>
+                    <div class="line" data-text="TRUSTED."></div>
+                    <div class="indicator-dot"></div>
+                </div>
+            </div>
+
+            <div class="features-wrapper">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 100 100" fill="none" stroke="#00e5ff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="50" cy="50" r="42"/>
+                            <path d="M30 50 L45 65 L72 38"/>
+                        </svg>
+                    </div>
+                    <div class="feature-text" data-text="HIGH QUALITY|STANDARDS"></div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 100 100" fill="none" stroke="#00e5ff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="50" cy="50" r="42"/>
+                            <path d="M30 50 L45 65 L72 38"/>
+                        </svg>
+                    </div>
+                    <div class="feature-text" data-text="EXPERIENCED|TEAM"></div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 100 100" fill="none" stroke="#00e5ff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="50" cy="50" r="42"/>
+                            <path d="M30 50 L45 65 L72 38"/>
+                        </svg>
+                    </div>
+                    <div class="feature-text" data-text="FULLY|INSURED"></div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 100 100" fill="none" stroke="#00e5ff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="50" cy="50" r="42"/>
+                            <path d="M30 50 L45 65 L72 38"/>
+                        </svg>
+                    </div>
+                    <div class="feature-text" data-text="RESIDENTIAL|&amp; COMMERCIAL"></div>
+                </div>
+            </div>
+
+            <div class="cta-wrapper">
+                <div class="cta-title">
+                    <span>GET</span><span>IN</span><span class="accent">TOUCH</span>
+                </div>
+
+                <div class="cta-item website-item">
+                    <div class="icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M2 12h20"/>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                        </svg>
+                    </div>
+                    <div class="text-wrap"><div class="text" data-text="www.leobluegroup.co.uk"></div></div>
+                </div>
+
+                <div class="cta-item location-item">
+                    <div class="icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <div class="text-wrap"><div class="text" data-text="Essex, London &amp; Surrounding Areas"></div></div>
+                </div>
+
+                <div class="cta-item phone-item">
+                    <div class="fill-overlay"></div>
+                    <div class="icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                    </div>
+                    <div class="text-wrap"><div class="text" data-text="07440 776511"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="final-slide">
+            <div class="final-glow"></div>
+            <div class="final-content">
+                <div class="final-heading">
+                    <div class="line" data-text="WANT TO PRESENT"></div>
+                    <div class="line" data-text="YOUR BUSINESS"></div>
+                    <div class="line accent" data-text="LIKE THIS?"></div>
+                </div>
+                <div class="final-neon-line"></div>
+                <div class="final-cta">
+                    <svg class="dm-icon" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    <div class="dm-text">
+                        <span>DM</span>
+                        <span>&nbsp;</span>
+                        <span>FOR</span>
+                        <span>&nbsp;</span>
+                        <span>YOUR</span>
+                        <span>&nbsp;</span>
+                        <span class="accent">VIDEO</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            function buildCharsFromText(container, text, highlightFirst = false) {
+                container.innerHTML = '';
+                const parts = text.split('|');
+                let isFirst = true;
+                parts.forEach(part => {
+                    part.split('').forEach(ch => {
+                        const s = document.createElement('span');
+                        s.textContent = ch;
+                        if (highlightFirst && isFirst) s.className = 'highlight';
+                        container.appendChild(s);
+                    });
+                    if (parts.length > 1 && isFirst) {
+                        const sp = document.createElement('span');
+                        sp.innerHTML = '&nbsp;';
+                        container.appendChild(sp);
+                    }
+                    isFirst = false;
+                });
+            }
+
+            function buildStampChars() {
+                document.querySelectorAll('.stamp-text .line').forEach(line => {
+                    const text = line.getAttribute('data-text');
+                    line.innerHTML = '';
+                    text.split('').forEach(ch => {
+                        const s = document.createElement('span');
+                        s.textContent = ch;
+                        line.appendChild(s);
+                    });
+                });
+            }
+
+            function buildFinalHeading() {
+                document.querySelectorAll('.final-heading .line').forEach(line => {
+                    const text = line.getAttribute('data-text');
+                    line.innerHTML = '';
+                    text.split('').forEach(ch => {
+                        const s = document.createElement('span');
+                        s.textContent = ch;
+                        line.appendChild(s);
+                    });
+                });
+            }
+
+            buildStampChars();
+            buildFinalHeading();
+
+            const featureTexts = document.querySelectorAll('.feature-text');
+            featureTexts.forEach(el => {
+                buildCharsFromText(el, el.getAttribute('data-text'), true);
+            });
+
+            const ctaTexts = document.querySelectorAll('.cta-item .text');
+            ctaTexts.forEach(el => {
+                const text = el.getAttribute('data-text');
+                el.innerHTML = '';
+                const words = text.split(' ');
+                words.forEach((word, wIdx) => {
+                    word.split('').forEach(ch => {
+                        const s = document.createElement('span');
+                        s.textContent = ch;
+                        el.appendChild(s);
+                    });
+                    if (wIdx < words.length - 1) {
+                        const sp = document.createElement('span');
+                        sp.innerHTML = '&nbsp;';
+                        sp.style.width = '0.3em';
+                        el.appendChild(sp);
+                    }
+                });
+            });
+
+            const stampChars = gsap.utils.toArray('.stamp-text .line span');
+            const featureItems = gsap.utils.toArray('.feature-item');
+            const ctaItems = gsap.utils.toArray('.cta-item');
+            const finalLines = gsap.utils.toArray('.final-heading .line span');
+
+            gsap.set(".stamp-container", { xPercent: -50, yPercent: -50, scale: 2.4, y: -900, opacity: 0, rotation: -6 });
+            gsap.set(stampChars, { opacity: 0 });
+            gsap.set(".indicator-dot", { opacity: 0, scale: 0, y: 0 });
+            gsap.set(".stamp-border", { opacity: 0, scale: 0.9 });
+            gsap.set(".impact-ring", { opacity: 0, width: 200, height: 200, borderWidth: 5 });
+            gsap.set(".flash-overlay", { opacity: 0 });
+            gsap.set(".features-wrapper", { xPercent: -50, yPercent: -50, opacity: 0 });
+            gsap.set(featureItems, { opacity: 0 });
+            featureTexts.forEach(el => gsap.set(el.children, { opacity: 0, x: 30 }));
+            gsap.set(".cta-wrapper", { xPercent: -50, yPercent: -50, opacity: 0 });
+            gsap.set(".cta-title span", { opacity: 0, y: 40 });
+            gsap.set(ctaItems, { opacity: 0, y: 60 });
+            ctaItems.forEach(item => {
+                const icon = item.querySelector('.icon-wrap');
+                const txt = item.querySelector('.text');
+                gsap.set(icon, { x: 220 });
+                gsap.set(txt.children, { opacity: 0, x: 30 });
+            });
+
+            gsap.set(".final-content", { xPercent: -50, yPercent: -50 });
+            gsap.set(finalLines, { opacity: 0, x: 60, filter: "blur(8px)" });
+            gsap.set(".final-neon-line", { opacity: 0, scaleX: 0, transformOrigin: "center center" });
+            gsap.set(".final-cta", { opacity: 0, y: 40, scale: 0.9 });
+            gsap.set(".final-cta .dm-text span", { opacity: 0, x: 20 });
+            gsap.set(".final-cta .dm-icon", { opacity: 0, x: -20 });
+            gsap.set(".final-glow", { opacity: 0, scale: 0.6 });
+
+            const masterTl = gsap.timeline({ delay: 0.5 });
+
+            masterTl
+                .to(".stamp-container", { opacity: 1, duration: 0.2 })
+                .to(".stamp-container", {
+                    y: 0,
+                    scale: 1,
+                    rotation: 0,
+                    duration: 0.55,
+                    ease: "power1.in"
+                })
+                .to(stampChars, {
+                    opacity: 1,
+                    duration: 0.09,
+                    stagger: 0.008,
+                    ease: "power1.out"
+                }, "-=0.2")
+                .to(".stamp-container", {
+                    scale: 1.02,
+                    y: 4,
+                    duration: 0.15,
+                    ease: "power1.out"
+                })
+                .to(".flash-overlay", { opacity: 0.3, duration: 0.08 }, "-=0.08")
+                .to(".flash-overlay", { opacity: 0.1, duration: 0.09 })
+                .to(".flash-overlay", { opacity: 0.22, duration: 0.08 })
+                .to(".flash-overlay", { opacity: 0, duration: 0.45, ease: "power2.in" })
+                .to(".stamp-border", {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 0.3,
+                    ease: "power2.out"
+                }, "-=0.6")
+                .to(".impact-ring", {
+                    opacity: 0.7,
+                    width: 1150,
+                    height: 1150,
+                    borderWidth: 0.5,
+                    duration: 0.9,
+                    ease: "power2.out"
+                }, "-=0.7")
+                .to(".impact-ring", { opacity: 0, duration: 0.3 }, "-=0.2")
+                .to(".stamp-container", {
+                    scale: 1,
+                    y: 0,
+                    duration: 0.65,
+                    ease: "power2.out"
+                }, "-=0.75")
+                .to(".stamp-container", { rotation: 1.2, duration: 0.2, ease: "power1.out" }, "-=0.5")
+                .to(".stamp-container", { rotation: -0.5, duration: 0.24, ease: "power1.inOut" })
+                .to(".stamp-container", { rotation: 0.15, duration: 0.28, ease: "power1.inOut" })
+                .to(".stamp-container", { rotation: 0, duration: 0.35, ease: "power1.out" })
+
+                .to(".indicator-dot", {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 0.5,
+                    ease: "back.out(2)"
+                }, "+=0.4")
+                .to(".indicator-dot", { y: 90, duration: 1.0, ease: "power2.inOut" }, "+=0.6")
+                .to(".indicator-dot", { y: 180, duration: 1.0, ease: "power2.inOut" }, "+=0.6")
+                .to(".indicator-dot", {
+                    opacity: 0,
+                    scale: 0.5,
+                    duration: 0.4,
+                    ease: "power2.in"
+                }, "+=0.6")
+
+                .to(".stamp-container", {
+                    y: -400,
+                    duration: 1.3,
+                    ease: "power2.inOut"
+                }, "+=0.3")
+
+                .to(".features-wrapper", {
+                    opacity: 1,
+                    duration: 0.4,
+                    ease: "power2.out"
+                }, "<")
+
+                .to(featureItems[0], { opacity: 1, duration: 0.01 })
+                .fromTo(featureItems[0], { x: 300 }, { x: 0, duration: 0.75, ease: "power2.out" }, "<")
+                .to(featureTexts[0].children, { opacity: 1, x: 0, duration: 0.45, stagger: 0.035, ease: "power2.out", delay: 0.35 }, "<")
+
+                .to(featureItems[1], { opacity: 1, duration: 0.01 }, "+=0.5")
+                .fromTo(featureItems[1], { x: 300 }, { x: 0, duration: 0.75, ease: "power2.out" }, "<")
+                .to(featureTexts[1].children, { opacity: 1, x: 0, duration: 0.45, stagger: 0.035, ease: "power2.out", delay: 0.35 }, "<")
+
+                .to(featureItems[2], { opacity: 1, duration: 0.01 }, "+=0.5")
+                .fromTo(featureItems[2], { x: 300 }, { x: 0, duration: 0.75, ease: "power2.out" }, "<")
+                .to(featureTexts[2].children, { opacity: 1, x: 0, duration: 0.45, stagger: 0.035, ease: "power2.out", delay: 0.35 }, "<")
+
+                .to(featureItems[3], { opacity: 1, duration: 0.01 }, "+=0.5")
+                .fromTo(featureItems[3], { x: 300 }, { x: 0, duration: 0.75, ease: "power2.out" }, "<")
+                .to(featureTexts[3].children, { opacity: 1, x: 0, duration: 0.45, stagger: 0.035, ease: "power2.out", delay: 0.35 }, "<")
+
+                .to(featureItems, {
+                    x: -1400,
+                    opacity: 0,
+                    duration: 0.9,
+                    stagger: 0.1,
+                    ease: "power2.in"
+                }, "+=0.8")
+
+                .to(".cta-wrapper", {
+                    opacity: 1,
+                    duration: 0.3
+                }, "-=0.4")
+
+                .to(".cta-title span", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.7,
+                    stagger: 0.15,
+                    ease: "power2.out"
+                })
+
+                .to(ctaItems[0], { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" }, "+=0.3")
+                .add(() => {
+                    const icon = ctaItems[0].querySelector('.icon-wrap');
+                    const txt = ctaItems[0].querySelector('.text');
+                    gsap.to(icon, { x: 0, duration: 1.1, ease: "power2.inOut" });
+                    gsap.to(txt.children, { opacity: 1, x: 0, duration: 0.5, stagger: 0.03, ease: "power2.out", delay: 0.4 });
+                })
+
+                .to(ctaItems[1], { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" }, "+=0.4")
+                .add(() => {
+                    const icon = ctaItems[1].querySelector('.icon-wrap');
+                    const txt = ctaItems[1].querySelector('.text');
+                    gsap.to(icon, { x: 0, duration: 1.1, ease: "power2.inOut" });
+                    gsap.to(txt.children, { opacity: 1, x: 0, duration: 0.5, stagger: 0.03, ease: "power2.out", delay: 0.4 });
+                })
+
+                .to(ctaItems[2], { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" }, "+=0.4")
+                .add(() => {
+                    const icon = ctaItems[2].querySelector('.icon-wrap');
+                    const txt = ctaItems[2].querySelector('.text');
+                    gsap.to(icon, { x: 0, duration: 1.1, ease: "power2.inOut" });
+                    gsap.to(txt.children, { opacity: 1, x: 0, duration: 0.5, stagger: 0.03, ease: "power2.out", delay: 0.4 });
+                })
+
+                .to(".phone-item .fill-overlay", {
+                    width: "100%",
+                    duration: 1.2,
+                    ease: "power2.inOut"
+                }, "+=0.8")
+                .add(() => {
+                    document.querySelector('.phone-item').classList.add('filled');
+                    const phoneIcon = document.querySelector('.phone-item .icon-wrap');
+                    gsap.fromTo(phoneIcon,
+                        { rotation: 0 },
+                        {
+                            rotation: 18,
+                            duration: 0.09,
+                            repeat: 21,
+                            yoyo: true,
+                            ease: "power2.inOut",
+                            transformOrigin: "center center",
+                            onComplete: () => { gsap.to(phoneIcon, { rotation: 0, duration: 0.15, ease: "power2.out" }); }
+                        }
+                    );
+                })
+                .to(".phone-item", {
+                    boxShadow: "0 0 14px rgba(0, 229, 255, 0.28), inset 0 0 14px rgba(0, 229, 255, 0.06)",
+                    duration: 0.8,
+                    ease: "power2.out"
+                }, "-=0.4")
+
+                /* --- Transition to Final Slide --- */
+                .to({}, { duration: 1.5 })
+                .to("#slide-3", {
+                    y: "-100%",
+                    duration: 1.5,
+                    ease: "power2.inOut"
+                })
+                .to("#final-slide", {
+                    y: "-100%",
+                    duration: 1.5,
+                    ease: "power2.inOut"
+                }, "<")
+
+                /* --- Final Slide Animations --- */
+                .to(".final-glow", {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 1.5,
+                    ease: "power2.out"
+                }, "-=0.8")
+                .to(finalLines, {
+                    opacity: 1,
+                    x: 0,
+                    filter: "blur(0px)",
+                    duration: 1.0,
+                    stagger: 0.08,
+                    ease: "power2.out"
+                }, "-=1.0")
+                .to(".final-neon-line", {
+                    opacity: 1,
+                    scaleX: 1,
+                    duration: 1.2,
+                    ease: "power2.inOut"
+                }, "-=0.6")
+                .to(".final-cta", {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    duration: 0.9,
+                    ease: "back.out(1.4)"
+                }, "-=0.5")
+                .to(".final-cta .dm-icon", {
+                    opacity: 1,
+                    x: 0,
+                    duration: 0.6,
+                    ease: "power2.out"
+                }, "-=0.5")
+                .to(".final-cta .dm-text span", {
+                    opacity: 1,
+                    x: 0,
+                    duration: 0.5,
+                    stagger: 0.04,
+                    ease: "power2.out"
+                }, "-=0.5")
+                .to(".final-cta", {
+                    boxShadow: "0 0 35px rgba(0, 229, 255, 0.6), inset 0 0 30px rgba(0, 229, 255, 0.12)",
+                    duration: 1.0,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut"
+                });
+        });
+    </script>
+</body>
+</html>
