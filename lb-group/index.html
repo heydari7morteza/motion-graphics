@@ -163,10 +163,9 @@
             background: #0d1529;
             border-radius: 30px;
             overflow: hidden;
-            opacity: 0;
-            transform-origin: center center;
             display: flex;
             flex-direction: column;
+            transform-origin: center center;
         }
         #slide-2 .card-img-container {
             width: 100%;
@@ -189,7 +188,7 @@
             height: 24%;
             display: flex;
             flex-direction: row;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             gap: 30px;
             background: #0d1528;
@@ -223,7 +222,7 @@
             z-index: 1;
         }
         #slide-2 .card-title-wrap {
-            width: 450px;
+            flex: 1;
             min-height: 60px;
             display: flex;
             align-items: center;
@@ -240,6 +239,7 @@
             display: flex;
             align-items: center;
             direction: ltr;
+            white-space: nowrap;
         }
         #slide-2 .card-title span { display: inline-block; }
 
@@ -595,56 +595,56 @@
             </div>
             <div class="stack-wrapper">
                 <div class="stack-container">
-                    <div class="stacked-card" data-index="0" data-title="CLEANING">
+                    <div class="stacked-card" data-title="CLEANING">
                         <div class="card-img-container"><img src="item1.png" class="card-img" alt="Cleaning"></div>
                         <div class="card-content">
                             <div class="card-icon-wrap"><img src="icon1.png" alt="Icon"></div>
                             <div class="card-title-wrap"><div class="card-title"></div></div>
                         </div>
                     </div>
-                    <div class="stacked-card" data-index="1" data-title="VALETING">
+                    <div class="stacked-card" data-title="VALETING">
                         <div class="card-img-container"><img src="item2.png" class="card-img" alt="Valeting"></div>
                         <div class="card-content">
                             <div class="card-icon-wrap"><img src="icon2.png" alt="Icon"></div>
                             <div class="card-title-wrap"><div class="card-title"></div></div>
                         </div>
                     </div>
-                    <div class="stacked-card" data-index="2" data-title="HANDYMAN">
+                    <div class="stacked-card" data-title="HANDYMAN">
                         <div class="card-img-container"><img src="item3.png" class="card-img" alt="Handyman"></div>
                         <div class="card-content">
                             <div class="card-icon-wrap"><img src="icon3.png" alt="Icon"></div>
                             <div class="card-title-wrap"><div class="card-title"></div></div>
                         </div>
                     </div>
-                    <div class="stacked-card" data-index="3" data-title="WASTE">
+                    <div class="stacked-card" data-title="WASTE">
                         <div class="card-img-container"><img src="item4.png" class="card-img" alt="Waste"></div>
                         <div class="card-content">
                             <div class="card-icon-wrap"><img src="icon4.png" alt="Icon"></div>
                             <div class="card-title-wrap"><div class="card-title"></div></div>
                         </div>
                     </div>
-                    <div class="stacked-card" data-index="4" data-title="REMOVALS">
+                    <div class="stacked-card" data-title="REMOVALS">
                         <div class="card-img-container"><img src="item5.png" class="card-img" alt="Removals"></div>
                         <div class="card-content">
                             <div class="card-icon-wrap"><img src="icon5.png" alt="Icon"></div>
                             <div class="card-title-wrap"><div class="card-title"></div></div>
                         </div>
                     </div>
-                    <div class="stacked-card" data-index="5" data-title="EXTERIOR">
+                    <div class="stacked-card" data-title="EXTERIOR">
                         <div class="card-img-container"><img src="item6.png" class="card-img" alt="Exterior"></div>
                         <div class="card-content">
                             <div class="card-icon-wrap"><img src="icon6.png" alt="Icon"></div>
                             <div class="card-title-wrap"><div class="card-title"></div></div>
                         </div>
                     </div>
-                    <div class="stacked-card" data-index="6" data-title="LOCKSMITH">
+                    <div class="stacked-card" data-title="LOCKSMITH">
                         <div class="card-img-container"><img src="item7.png" class="card-img" alt="Locksmith"></div>
                         <div class="card-content">
                             <div class="card-icon-wrap"><img src="icon7.png" alt="Icon"></div>
                             <div class="card-title-wrap"><div class="card-title"></div></div>
                         </div>
                     </div>
-                    <div class="stacked-card" data-index="7" data-title="LANDSCAPING">
+                    <div class="stacked-card" data-title="LANDSCAPING">
                         <div class="card-img-container"><img src="item8.png" class="card-img" alt="Landscaping"></div>
                         <div class="card-content">
                             <div class="card-icon-wrap"><img src="icon8.png" alt="Icon"></div>
@@ -778,8 +778,7 @@
         });
 
         /* ============================================================
-           PRELOAD ALL IMAGES BEFORE STARTING THE ANIMATION
-           این بخش تضمین می‌کند که هیچ عکسی وسط انیمیشن لود نشود
+           PRELOAD ALL IMAGES BEFORE STARTING
            ============================================================ */
         const imagesToPreload = [
             'home-left.png', 'logo.png',
@@ -797,7 +796,7 @@
             loadedCount++;
             if (loadedCount === totalImages) {
                 loaderEl.classList.add('hidden');
-                setTimeout(() => { loaderEl.style.display = 'none'; }, 500);
+                setTimeout(function() { loaderEl.style.display = 'none'; }, 500);
                 startAnimation();
             }
         }
@@ -813,6 +812,7 @@
             gsap.config({ force3D: true, nullTargetWarn: false });
             gsap.ticker.lagSmoothing(1000, 60);
 
+            /* ---------- Pre-build all text spans ONCE ---------- */
             function buildCharsFromText(container, text, highlightFirst) {
                 container.innerHTML = '';
                 const parts = text.split('|');
@@ -833,33 +833,26 @@
                 });
             }
 
-            function buildStampChars() {
-                document.querySelectorAll('#slide-3 .stamp-text .line').forEach(function (line) {
-                    const text = line.getAttribute('data-text');
-                    line.innerHTML = '';
-                    text.split('').forEach(function (ch) {
-                        const s = document.createElement('span');
-                        s.textContent = ch;
-                        line.appendChild(s);
-                    });
+            document.querySelectorAll('#slide-3 .stamp-text .line').forEach(function (line) {
+                const text = line.getAttribute('data-text');
+                line.innerHTML = '';
+                text.split('').forEach(function (ch) {
+                    const s = document.createElement('span');
+                    s.textContent = ch;
+                    line.appendChild(s);
                 });
-            }
+            });
 
-            function buildFinalHeading() {
-                document.querySelectorAll('#final-slide .final-heading .line').forEach(function (line) {
-                    const text = line.getAttribute('data-text');
-                    line.innerHTML = '';
-                    text.split('').forEach(function (ch) {
-                        const s = document.createElement('span');
-                        if (ch === ' ') s.innerHTML = '&nbsp;';
-                        else s.textContent = ch;
-                        line.appendChild(s);
-                    });
+            document.querySelectorAll('#final-slide .final-heading .line').forEach(function (line) {
+                const text = line.getAttribute('data-text');
+                line.innerHTML = '';
+                text.split('').forEach(function (ch) {
+                    const s = document.createElement('span');
+                    if (ch === ' ') s.innerHTML = '&nbsp;';
+                    else s.textContent = ch;
+                    line.appendChild(s);
                 });
-            }
-
-            buildStampChars();
-            buildFinalHeading();
+            });
 
             const featureTexts = document.querySelectorAll('#slide-3 .feature-text');
             featureTexts.forEach(function (el) {
@@ -886,7 +879,23 @@
                 });
             });
 
+            /* ---------- Pre-build card titles ONCE ---------- */
             const cards = gsap.utils.toArray('#slide-2 .stacked-card');
+            const cardTitles = [];
+            cards.forEach(function(card) {
+                const titleEl = card.querySelector('.card-title');
+                const text = card.getAttribute('data-title');
+                titleEl.innerHTML = '';
+                const spans = [];
+                text.split('').forEach(function(ch) {
+                    const s = document.createElement('span');
+                    s.textContent = ch;
+                    titleEl.appendChild(s);
+                    spans.push(s);
+                });
+                cardTitles.push({ el: titleEl, spans: spans });
+            });
+
             const stampChars = gsap.utils.toArray('#slide-3 .stamp-text .line span');
             const featureItems = gsap.utils.toArray('#slide-3 .feature-item');
             const ctaItems = gsap.utils.toArray('#slide-3 .cta-item');
@@ -894,27 +903,39 @@
 
             let currentIndex = 0;
             let slidesShown = 1;
-            let carouselInterval;
 
+            /* Only 3 visible stack positions - front, middle, back */
             const positions = [
-                { x: 0,   y: 0,  rotation: -3, scale: 1,    opacity: 1,    zIndex: 100 },
-                { x: 50,  y: 12, rotation: 3,  scale: 0.95, opacity: 1,    zIndex: 90  },
-                { x: 90,  y: 24, rotation: 7,  scale: 0.9,  opacity: 0.85, zIndex: 80  },
-                { x: 125, y: 36, rotation: 11, scale: 0.85, opacity: 0.55, zIndex: 70  }
+                { x: 0,    y: 0,  rotation: -3, scale: 1,    opacity: 1,    zIndex: 100 },
+                { x: 60,   y: 15, rotation: 4,  scale: 0.94, opacity: 0.9,  zIndex: 90  },
+                { x: 120,  y: 30, rotation: 8,  scale: 0.88, opacity: 0.6,  zIndex: 80  }
             ];
 
             gsap.set("#slide-2", { y: "100%" });
             gsap.set("#slide-3", { y: "100%" });
             gsap.set("#final-slide", { y: "100%" });
 
-            // Cards beyond position 3 stay completely hidden - no per-frame animation
+            /* Set initial state for all cards - only first 3 visible */
             cards.forEach(function (card, idx) {
-                if (idx <= 3) {
-                    gsap.set(card, { x: 0, y: 0, rotation: 0, scale: 0.5, opacity: 0, zIndex: 0 });
+                if (idx === 0) {
+                    gsap.set(card, { x: 0, y: 0, rotation: -3, scale: 1, opacity: 1, zIndex: 100 });
+                } else if (idx === 1) {
+                    gsap.set(card, { x: 60, y: 15, rotation: 4, scale: 0.94, opacity: 0.9, zIndex: 90 });
+                } else if (idx === 2) {
+                    gsap.set(card, { x: 120, y: 30, rotation: 8, scale: 0.88, opacity: 0.6, zIndex: 80 });
                 } else {
-                    gsap.set(card, { x: 125, y: 36, rotation: 11, scale: 0.85, opacity: 0, zIndex: 0 });
+                    gsap.set(card, { x: 150, y: 40, rotation: 10, scale: 0.85, opacity: 0, zIndex: 0 });
                 }
-                gsap.set(card.querySelector('.card-icon-wrap'), { x: 240 });
+                gsap.set(card.querySelector('.card-icon-wrap'), { x: 0 });
+            });
+
+            /* Hide all titles initially - only show first */
+            cardTitles.forEach(function(t, idx) {
+                if (idx === 0) {
+                    gsap.set(t.spans, { opacity: 1 });
+                } else {
+                    gsap.set(t.spans, { opacity: 0 });
+                }
             });
 
             gsap.set("#slide-2 .text-container-s2", { xPercent: -50, yPercent: -50, y: 0 });
@@ -928,7 +949,7 @@
             gsap.set("#slide-3 .flash-overlay", { opacity: 0 });
             gsap.set("#slide-3 .features-wrapper", { xPercent: -50, yPercent: -50, opacity: 0 });
             gsap.set(featureItems, { opacity: 0 });
-            featureTexts.forEach(function (el) { gsap.set(el.children, { opacity: 0, y: 12 }); });
+            featureTexts.forEach(function (el) { gsap.set(el.children, { opacity: 0 }); });
             gsap.set("#slide-3 .cta-wrapper", { xPercent: -50, yPercent: -50, opacity: 0 });
             gsap.set("#slide-3 .cta-title span", { opacity: 0, y: 40 });
             gsap.set(ctaItems, { opacity: 0, y: 60 });
@@ -936,7 +957,7 @@
                 const icon = item.querySelector('.icon-wrap');
                 const txt = item.querySelector('.text');
                 gsap.set(icon, { x: 220 });
-                gsap.set(txt.children, { opacity: 0, y: 12 });
+                gsap.set(txt.children, { opacity: 0 });
             });
 
             gsap.set("#final-slide .final-content", { xPercent: -50, yPercent: -50 });
@@ -947,13 +968,13 @@
             gsap.set("#final-slide .final-cta .dm-icon", { opacity: 0 });
             gsap.set("#final-slide .final-glow", { opacity: 0, scale: 0.6 });
 
+            /* ---------- STACK UPDATE ---------- */
             function updateStack() {
                 cards.forEach(function (card, index) {
                     let stackPos = index - currentIndex;
                     if (stackPos < 0) stackPos += cards.length;
 
-                    // Only animate the 4 visible cards - rest stay hidden at fixed position
-                    if (stackPos > 3) {
+                    if (stackPos > 2) {
                         gsap.set(card, { opacity: 0, zIndex: 0 });
                         return;
                     }
@@ -967,55 +988,52 @@
                 });
             }
 
-            function animateCardContent(card) {
-                const icon = card.querySelector('.card-icon-wrap');
-                const titleEl = card.querySelector('.card-title');
-                const text = card.getAttribute('data-title');
-
-                gsap.to(icon, { x: 0, duration: 0.85, ease: "power2.inOut" });
-
-                titleEl.innerHTML = '';
-                text.split('').forEach(function (char) {
-                    const span = document.createElement('span');
-                    span.textContent = char;
-                    titleEl.appendChild(span);
+            /* ---------- ANIMATE NEW CARD TITLE (opacity only) ---------- */
+            function showCardTitle(cardIndex) {
+                const t = cardTitles[cardIndex];
+                gsap.set(t.spans, { opacity: 0 });
+                gsap.to(t.spans, {
+                    opacity: 1,
+                    duration: 0.35,
+                    stagger: 0.04,
+                    ease: "power2.out",
+                    delay: 0.15
                 });
-
-                gsap.fromTo(titleEl.children,
-                    { opacity: 0, y: 15 },
-                    { opacity: 1, y: 0, duration: 0.5, stagger: 0.045, ease: "power2.out", delay: 0.25 }
-                );
             }
 
-            function nextCard() {
-                if (slidesShown >= 8) {
-                    clearInterval(carouselInterval);
-                    return;
-                }
+            /* ---------- CHAINED CARD TRANSITION (no setInterval) ---------- */
+            function advanceCard() {
+                if (slidesShown >= 8) return;
+
                 const frontCard = cards[currentIndex];
+                const prevIndex = currentIndex;
+
                 gsap.to(frontCard, {
                     x: -900,
                     opacity: 0,
-                    duration: 0.65,
+                    duration: 0.6,
                     ease: "power2.in",
                     onComplete: function () {
                         currentIndex = currentIndex + 1;
                         slidesShown++;
                         updateStack();
-                        animateCardContent(cards[currentIndex]);
+                        showCardTitle(currentIndex);
+                        /* Chain next card change after pause */
+                        gsap.delayedCall(2.2, advanceCard);
                     }
                 });
             }
 
             function startSlide2Carousel() {
-                animateCardContent(cards[0]);
                 updateStack();
-                carouselInterval = setInterval(nextCard, 2600);
+                showCardTitle(0);
+                gsap.delayedCall(2.2, advanceCard);
             }
 
+            /* ---------- MASTER TIMELINE ---------- */
             const masterTl = gsap.timeline({ delay: 0.2 });
 
-            /* ===== SLIDE 1 ===== */
+            /* SLIDE 1 */
             masterTl
                 .fromTo("#slide-1 .left-house",
                     { opacity: 0, scale: 1.05 },
@@ -1035,12 +1053,12 @@
                 .to("#slide-1 .neon-line",
                     { scaleX: 1, opacity: 1, duration: 1.1, ease: "power4.inOut" }, 2.9);
 
-            /* ===== TRANSITION 1 → 2 ===== */
+            /* TRANSITION 1 → 2 */
             masterTl
                 .to("#slide-1", { y: "-100%", duration: 0.9, ease: "power2.inOut" }, 5.0)
                 .to("#slide-2", { y: "0%", duration: 0.9, ease: "power2.inOut" }, "<");
 
-            /* ===== SLIDE 2 ===== */
+            /* SLIDE 2 */
             masterTl
                 .fromTo("#slide-2 .s2-text-1 span",
                     { opacity: 0, y: 20 },
@@ -1059,15 +1077,15 @@
                     { y: 240, opacity: 1, duration: 1.2, ease: "power2.out" }, "<")
                 .add(function () { startSlide2Carousel(); }, "-=0.4");
 
-            masterTl.to({}, { duration: 20 });
+            /* Wait for all 8 cards: 7 transitions × 2.2s + buffer */
+            masterTl.to({}, { duration: 19 });
 
-            /* ===== TRANSITION 2 → 3 ===== */
+            /* TRANSITION 2 → 3 */
             masterTl
-                .add(function () { if (carouselInterval) clearInterval(carouselInterval); })
                 .to("#slide-2", { y: "-100%", duration: 0.9, ease: "power2.inOut" })
                 .to("#slide-3", { y: "0%", duration: 0.9, ease: "power2.inOut" }, "<");
 
-            /* ===== SLIDE 3 ===== */
+            /* SLIDE 3 */
             masterTl
                 .to("#slide-3 .stamp-container", { opacity: 1, duration: 0.15 })
                 .to("#slide-3 .stamp-container", {
@@ -1116,16 +1134,16 @@
                 }, "<")
                 .to(featureItems[0], { opacity: 1, duration: 0.01 })
                 .fromTo(featureItems[0], { x: 300 }, { x: 0, duration: 0.65, ease: "power2.out" }, "<")
-                .to(featureTexts[0].children, { opacity: 1, y: 0, duration: 0.4, stagger: 0.03, ease: "power2.out", delay: 0.3 }, "<")
+                .to(featureTexts[0].children, { opacity: 1, duration: 0.4, stagger: 0.03, ease: "power2.out", delay: 0.3 }, "<")
                 .to(featureItems[1], { opacity: 1, duration: 0.01 }, "+=0.4")
                 .fromTo(featureItems[1], { x: 300 }, { x: 0, duration: 0.65, ease: "power2.out" }, "<")
-                .to(featureTexts[1].children, { opacity: 1, y: 0, duration: 0.4, stagger: 0.03, ease: "power2.out", delay: 0.3 }, "<")
+                .to(featureTexts[1].children, { opacity: 1, duration: 0.4, stagger: 0.03, ease: "power2.out", delay: 0.3 }, "<")
                 .to(featureItems[2], { opacity: 1, duration: 0.01 }, "+=0.4")
                 .fromTo(featureItems[2], { x: 300 }, { x: 0, duration: 0.65, ease: "power2.out" }, "<")
-                .to(featureTexts[2].children, { opacity: 1, y: 0, duration: 0.4, stagger: 0.03, ease: "power2.out", delay: 0.3 }, "<")
+                .to(featureTexts[2].children, { opacity: 1, duration: 0.4, stagger: 0.03, ease: "power2.out", delay: 0.3 }, "<")
                 .to(featureItems[3], { opacity: 1, duration: 0.01 }, "+=0.4")
                 .fromTo(featureItems[3], { x: 300 }, { x: 0, duration: 0.65, ease: "power2.out" }, "<")
-                .to(featureTexts[3].children, { opacity: 1, y: 0, duration: 0.4, stagger: 0.03, ease: "power2.out", delay: 0.3 }, "<")
+                .to(featureTexts[3].children, { opacity: 1, duration: 0.4, stagger: 0.03, ease: "power2.out", delay: 0.3 }, "<")
                 .to(featureItems, {
                     x: -1400, opacity: 0, duration: 0.8,
                     stagger: 0.08, ease: "power2.in"
@@ -1141,21 +1159,21 @@
                     const icon = ctaItems[0].querySelector('.icon-wrap');
                     const txt = ctaItems[0].querySelector('.text');
                     gsap.to(icon, { x: 0, duration: 1.0, ease: "power2.inOut" });
-                    gsap.to(txt.children, { opacity: 1, y: 0, duration: 0.45, stagger: 0.025, ease: "power2.out", delay: 0.35 });
+                    gsap.to(txt.children, { opacity: 1, duration: 0.45, stagger: 0.025, ease: "power2.out", delay: 0.35 });
                 })
                 .to(ctaItems[1], { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, "+=0.3")
                 .add(function () {
                     const icon = ctaItems[1].querySelector('.icon-wrap');
                     const txt = ctaItems[1].querySelector('.text');
                     gsap.to(icon, { x: 0, duration: 1.0, ease: "power2.inOut" });
-                    gsap.to(txt.children, { opacity: 1, y: 0, duration: 0.45, stagger: 0.025, ease: "power2.out", delay: 0.35 });
+                    gsap.to(txt.children, { opacity: 1, duration: 0.45, stagger: 0.025, ease: "power2.out", delay: 0.35 });
                 })
                 .to(ctaItems[2], { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, "+=0.3")
                 .add(function () {
                     const icon = ctaItems[2].querySelector('.icon-wrap');
                     const txt = ctaItems[2].querySelector('.text');
                     gsap.to(icon, { x: 0, duration: 1.0, ease: "power2.inOut" });
-                    gsap.to(txt.children, { opacity: 1, y: 0, duration: 0.45, stagger: 0.025, ease: "power2.out", delay: 0.35 });
+                    gsap.to(txt.children, { opacity: 1, duration: 0.45, stagger: 0.025, ease: "power2.out", delay: 0.35 });
                 })
                 .to("#slide-3 .phone-item .fill-overlay", {
                     width: "100%", duration: 1.0, ease: "power2.inOut"
@@ -1177,12 +1195,12 @@
                     duration: 0.7, ease: "power2.out"
                 }, "-=0.35");
 
-            /* ===== TRANSITION 3 → FINAL ===== */
+            /* TRANSITION 3 → FINAL */
             masterTl
                 .to("#slide-3", { y: "-100%", duration: 0.9, ease: "power2.inOut" }, "+=1.0")
                 .to("#final-slide", { y: "0%", duration: 0.9, ease: "power2.inOut" }, "<");
 
-            /* ===== FINAL SLIDE ===== */
+            /* FINAL SLIDE */
             masterTl
                 .to("#final-slide .final-glow", {
                     opacity: 1, scale: 1, duration: 1.1, ease: "power2.out"
